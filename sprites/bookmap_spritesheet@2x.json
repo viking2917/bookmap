@@ -1,28 +1,28 @@
 {
-  "bookmap_spritesheet": {
-    "x": 2,
-    "y": 2,
-    "width": 265,
-    "height": 332,
-    "pixelRatio": 2
-  },
   "woodblock-paper": {
     "x": 2,
-    "y": 336,
+    "y": 2,
     "width": 261,
     "height": 261,
     "pixelRatio": 2
   },
   "etch": {
     "x": 2,
-    "y": 599,
+    "y": 265,
     "width": 101,
     "height": 65,
     "pixelRatio": 2
   },
   "etched_pattern": {
     "x": 105,
-    "y": 599,
+    "y": 265,
+    "width": 32,
+    "height": 32,
+    "pixelRatio": 2
+  },
+  "gradient": {
+    "x": 139,
+    "y": 265,
     "width": 32,
     "height": 32,
     "pixelRatio": 2

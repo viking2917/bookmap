@@ -169,7 +169,7 @@ def create_sprite_set(input_dir: Path, output_name: str, pixel_ratio: int = 1, m
     suffix = f"@{pixel_ratio}x" if pixel_ratio > 1 else ""
     
     # Save sprite sheet
-    sprite_image_path = input_dir / f"{output_name}{suffix}.png"
+    sprite_image_path = f"{output_name}{suffix}.png"
     sprite_sheet.save(sprite_image_path, 'PNG', optimize=True)
     print(f"\nSaved sprite sheet: {sprite_image_path}")
     
@@ -181,7 +181,7 @@ def create_sprite_set(input_dir: Path, output_name: str, pixel_ratio: int = 1, m
             json_data[name]["pixelRatio"] = pixel_ratio
     
     # Save JSON
-    json_path = input_dir / f"{output_name}.json"
+    json_path = f"{output_name}.json"
     with open(json_path, 'w') as f:
         json.dump(json_data, f, indent=2)
     print(f"Saved sprite metadata: {json_path}")

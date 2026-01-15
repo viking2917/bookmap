@@ -4,6 +4,6 @@
   "author": "The Hawaii Project",
   "homepage": "https://www.bookshipapp.com/",
   "scripts": {
-    "sprites": "cd sprites; python create_sprite_set.py ./spriteimages bookmap_spritesheet; python create_sprite_set.py ./spriteimages bookmap_spritesheet --pixel-ratio 2; mv spriteimages/bookmap_spritesheet*.* .; cp bookmap_spritesheet.json bookmap_spritesheet@2x.json"
+    "sprites": "cd sprites; python create_sprite_set.py ./spriteimages bookmap_spritesheet; python create_sprite_set.py ./spriteimages bookmap_spritesheet --pixel-ratio 2; cp bookmap_spritesheet.json bookmap_spritesheet@2x.json"
   }
 }
