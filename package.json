@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "sprites": "python create_sprite_set.py ./spriteimages ./bookmap_sprites --pixel-ratio 2; "
+  }
+}
