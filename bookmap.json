@@ -1,15 +1,23 @@
 {
   "version": 8,
-  "name": "ohm-woodblock",
-  "metadata": {"maputnik:renderer": "mbgljs"},
+  "name": "bookmap",
+  "metadata": {
+    "maputnik:renderer": "mbgljs",
+    "maputnik:openmaptiles_access_token": "iMg3lueCZxkUUN5R9hPR"
+  },
+  "attribution": "<a href=\"https://www.openhistoricalmap.org/\">OpenHistoricalMap</a>",
   "sources": {
     "osm": {
       "type": "vector",
-      "tiles": ["https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf"]
+      "tiles": [
+        "https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf"
+      ]
     },
     "ne": {
       "type": "vector",
-      "tiles": ["https://vtiles.openhistoricalmap.org/maps/ne/{z}/{x}/{y}.pbf"]
+      "tiles": [
+        "https://vtiles.openhistoricalmap.org/maps/ne/{z}/{x}/{y}.pbf"
+      ]
     },
     "osm_land": {
       "type": "vector",
@@ -25,7 +33,7 @@
       "url": "https://api.maptiler.com/tiles/v3-openmaptiles/tiles.json?key=iMg3lueCZxkUUN5R9hPR"
     }
   },
-  "sprite": "https://www.openhistoricalmap.org/map-styles/woodblock/woodblock_spritesheet",
+  "sprite": "https://viking2917.github.io/bookmap/sprites/bookmap_spritesheet",
   "glyphs": "https://www.openhistoricalmap.org/map-styles/fonts/{fontstack}/{range}.pbf",
   "layers": [
     {
@@ -34,7 +42,9 @@
       "minzoom": 0,
       "maxzoom": 24,
       "filter": ["all"],
-      "layout": {"visibility": "visible"},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "background-color": "rgba(207, 179, 125, 1)",
         "background-pattern": "woodblock-paper"
@@ -46,7 +56,9 @@
       "minzoom": 0,
       "maxzoom": 24,
       "filter": ["all"],
-      "layout": {"visibility": "visible"},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "background-color": "rgba(207, 179, 125, 1)",
         "background-opacity": 0.29
@@ -55,16 +67,22 @@
     {
       "id": "coastline",
       "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "water",
-      "filter": ["==", ["get", "class"], "ocean"],
-      "layout": {"visibility": "visible"},
       "paint": {
         "line-color": "rgba(68, 121, 208, 1)",
         "line-offset": 4,
         "line-translate-anchor": "map",
         "line-width": 5,
         "line-pattern": "woodblock-roadTest1c"
+      },
+      "filter": [
+        "==",
+        ["get", "class"],
+        "ocean"
+      ],
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "layout": {
+        "visibility": "visible"
       }
     },
     {
@@ -74,7 +92,9 @@
       "source-layer": "land",
       "minzoom": 0,
       "maxzoom": 24,
-      "layout": {"visibility": "visible"},
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "fill-color": "rgba(236, 225, 203, 1)",
         "fill-pattern": "woodblock-paper"
@@ -87,8 +107,13 @@
       "source-layer": "land",
       "minzoom": 0,
       "maxzoom": 24,
-      "layout": {"visibility": "visible"},
-      "paint": {"fill-color": "rgba(236, 225, 203, 1)", "fill-opacity": 0}
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "fill-color": "rgba(236, 225, 203, 1)",
+        "fill-opacity": 0
+      }
     },
     {
       "id": "water_areas",
@@ -97,8 +122,13 @@
       "source-layer": "water_areas",
       "minzoom": 8,
       "maxzoom": 24,
-      "layout": {"visibility": "visible"},
-      "paint": {"fill-color": "rgba(207, 179, 125, 1)", "fill-opacity": 0.29}
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "fill-color": "rgba(207, 179, 125, 1)",
+        "fill-opacity": 0.29
+      }
     },
     {
       "id": "buildings_flat_ruins",
@@ -107,17 +137,30 @@
       "source-layer": "other_areas",
       "minzoom": 14,
       "maxzoom": 24,
-      "filter": ["==", ["get", "type"], ""],
+      "filter": [
+        "==",
+        ["get", "type"],
+        ""
+      ],
       "layout": {"visibility": "none"},
-      "paint": {"fill-color": "rgba(182, 143, 53, 1)", "fill-opacity": 0.1}
+      "paint": {
+        "fill-color": "rgba(182, 143, 53, 1)",
+        "fill-opacity": 0.1
+      }
     },
     {
       "id": "t_outlines",
       "type": "line",
       "source": "osm",
       "source-layer": "other_areas",
-      "filter": ["==", ["get", "type"], "ruins"],
-      "layout": {"visibility": "visible"},
+      "filter": [
+        "==",
+        ["get", "type"],
+        "ruins"
+      ],
+      "layout": {
+        "visibility": "visible"
+      },
       "paint": {
         "line-color": "rgba(170, 44, 44, 1)",
         "line-opacity": 1,
@@ -129,9 +172,30 @@
       "id": "etch",
       "type": "line",
       "source": "openmaptiles",
-      "source-layer": "water"
+      "source-layer": "water",
+      "paint": {
+        "line-color": "#000",
+        "line-width": 1.5
+      }
+    },
+    {
+      "id": "coastline-etch",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "filter": [
+        "==",
+        ["get", "class"],
+        "ocean"
+      ],
+      "layout": {
+        "line-pattern": "etch"
+      },
+      "paint": {
+        "line-width": 2,
+        "line-opacity": 0.6
+      }
     }
   ],
-  "attribution": "<a href=\"https://www.openhistoricalmap.org/\">OpenHistoricalMap</a>",
   "id": "io6r61fxt"
 }
