@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Sprites</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px;
+        }
+        .sprite-info {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background: #333;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Map Sprite Set</h1>
+    <p>Available sprites for use in maps.</p>
+    
+    <div class="sprite-info">
+        <h2>Usage</h2>
+        <p>Base URL: <code id="baseUrl"></code></p>
+        <p>In your map style JSON:</p>
+        <pre><code>{
+  "sprite": "<span id="spriteUrl"></span>"
+}</code></pre>
+    </div>
+
+    <h2>Files</h2>
+    <ul>
+        <li><a href="sprites/sprites.json">sprites.json</a> - Sprite metadata</li>
+        <li><a href="sprites/sprites.png">sprites.png</a> - Sprite image (1x)</li>
+        <li><a href="sprites/sprites@2x.png">sprites@2x.png</a> - Sprite image (2x)</li>
+    </ul>
+
+    <script>
+        const baseUrl = window.location.origin + window.location.pathname.replace(/\/$/, '');
+        const spriteUrl = baseUrl + '/sprites/sprites';
+        document.getElementById('baseUrl').textContent = spriteUrl;
+        document.getElementById('spriteUrl').textContent = spriteUrl;
+    </script>
+</body>
+</html>
