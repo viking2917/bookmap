@@ -1,5 +1,9 @@
 {
+  "name": "bookmap",
+  "version": "1.0.0",
+  "author": "The Hawaii Project",
+  "homepage": "https://www.bookshipapp.com/",
   "scripts": {
-    "sprites": "python create_sprite_set.py ./spriteimages ./bookmap_sprites --pixel-ratio 2; "
+    "sprites": "cd sprites; python create_sprite_set.py ./spriteimages bookmap_spritesheet; python create_sprite_set.py ./spriteimages bookmap_spritesheet --pixel-ratio 2; mv spriteimages/bookmap_spritesheet*.* ."
   }
 }
