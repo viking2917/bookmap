@@ -14,6 +14,8 @@ I used Maputnik, Open, Positron, and customized from there.
 Inspired by 
 
 
+https://blog.greeninfo.org/how-to-make-a-historic-style-444af3f2b6fc
+
 https://blog.greeninfo.org/how-to-recreate-a-map-style-1d288ed8d398
 
 https://kmalexander.com/2019/07/31/tutorial-creating-18th-century-coastlines-for-fantasy-maps/
@@ -26,3 +28,17 @@ https://www.mapbox.com/blog/new-bathymetry-tileset-and-style-for-marine-maps
 
 questions
 show historical state boundaries
+
+
+## the stack
+
+maplibregl
+
+open historical map
+
+maptiler
+
+maputnik
+
+map tiles & sources
+

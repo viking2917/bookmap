@@ -30,6 +30,12 @@
     "ocean-vector": {
       "type": "vector",
       "url": "https://api.maptiler.com/tiles/ocean/tiles.json?key=iMg3lueCZxkUUN5R9hPR"
+    },
+    "osm": {
+      "type": "vector",
+      "tiles": [
+        "https://vtiles.staging.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf"
+      ]
     }
   },
   "sprite": "https://openmaptiles.github.io/positron-gl-style/sprite",
@@ -705,6 +711,22 @@
       },
       "layout": {
         "visibility": "visible"
+      }
+    },
+        {
+      "id": "admin_countrylines_z10",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "land_ohm_lines",
+      "minzoom": 0,
+      "maxzoom": 20,
+      "filter": ["in", ["get", "admin_level"], ["literal", [1, 2]]],
+      "layout": {"visibility": "visible"},
+      "paint": {
+        "line-color": "rgba(157, 169, 174, 1)",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 0, 4, 8, 6],
+        "line-pattern": "woodblock-splotching-light",
+        "line-opacity": 1
       }
     }
   ],
