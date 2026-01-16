@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OpenHistoricalMaps - Custom POI Markers</title>
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@openhistoricalmap/maplibre-gl-dates/index.js"></script>
   <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
   <style>
     body {
@@ -107,7 +108,7 @@
     //  style: 'https://unpkg.com/@openhistoricalmap/map-styles@latest/dist/woodblock/woodblock.json',
     const map = new maplibregl.Map({
       container: 'map',
-      style: 'https://viking2917.github.io/bookmap/maptilerstyle.json',
+      style: 'https://viking2917.github.io/bookmap/standard.json',
       center: [rome[0], rome[1]], // Default center [lng, lat]
       zoom: 4
     });
@@ -129,11 +130,12 @@
     // This is useful for viewing historical data from a specific time period
     map.on('styledata', function () {
       // Set the year you want to display (example: 1900)
-      const targetYear = 1000;
+      const targetYear = 1187;
       const targetDate = `${targetYear}-01-01`;
 
       // Apply date filter if the function exists
       if (map.filterByDate) {
+        console.log('data filtering map');
         map.filterByDate(targetDate);
       }
     });
