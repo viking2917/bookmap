@@ -34,7 +34,7 @@
     "osm": {
       "type": "vector",
       "tiles": [
-        "https://vtiles.staging.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf"
+        "https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf"
       ]
     }
   },
@@ -165,7 +165,7 @@
       "layout": {
         "line-cap": "round",
         "line-join": "round",
-        "visibility": "visible"
+        "visibility": "none"
       },
       "paint": {
         "line-blur": {
@@ -213,485 +213,6 @@
       }
     },
     {
-      "id": "place_other",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 14,
-      "filter": [
-        "all",
-        [
-          "in",
-          "class",
-          "continent",
-          "hamlet",
-          "neighbourhood",
-          "isolated_dwelling"
-        ],
-        ["==", "$type", "Point"]
-      ],
-      "layout": {
-        "text-anchor": "center",
-        "text-field": "{name:latin}\n{name:nonlatin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-justify": "center",
-        "text-offset": [0.5, 0],
-        "text-size": 10,
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "text-color": "rgb(117, 129, 145)",
-        "text-halo-blur": 1,
-        "text-halo-color": "rgb(242,243,240)",
-        "text-halo-width": 1
-      }
-    },
-    {
-      "id": "place_suburb",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 15,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        ["==", "class", "suburb"]
-      ],
-      "layout": {
-        "text-anchor": "center",
-        "text-field": "{name:latin}\n{name:nonlatin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-justify": "center",
-        "text-offset": [0.5, 0],
-        "text-size": 10,
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "text-color": "rgb(117, 129, 145)",
-        "text-halo-blur": 1,
-        "text-halo-color": "rgb(242,243,240)",
-        "text-halo-width": 1
-      }
-    },
-    {
-      "id": "place_village",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 14,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        ["==", "class", "village"]
-      ],
-      "layout": {
-        "icon-size": 0.4,
-        "text-anchor": "left",
-        "text-field": "{name:latin}\n{name:nonlatin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-justify": "left",
-        "text-offset": [0.5, 0.2],
-        "text-size": 10,
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "icon-opacity": 0.7,
-        "text-color": "rgb(117, 129, 145)",
-        "text-halo-blur": 1,
-        "text-halo-color": "rgb(242,243,240)",
-        "text-halo-width": 1
-      }
-    },
-    {
-      "id": "place_town",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 15,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        ["==", "class", "town"]
-      ],
-      "layout": {
-        "icon-image": {
-          "base": 1,
-          "stops": [
-            [0, "circle-11"],
-            [8, ""]
-          ]
-        },
-        "icon-size": 0.4,
-        "text-anchor": {
-          "base": 1,
-          "stops": [
-            [0, "left"],
-            [8, "center"]
-          ]
-        },
-        "text-field": "{name:latin}\n{name:nonlatin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-justify": "left",
-        "text-offset": [0.5, 0.2],
-        "text-size": 10,
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "icon-opacity": 0.7,
-        "text-color": "rgb(117, 129, 145)",
-        "text-halo-blur": 1,
-        "text-halo-color": "rgb(242,243,240)",
-        "text-halo-width": 1
-      }
-    },
-    {
-      "id": "place_city",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 14,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        [
-          "all",
-          ["!=", "capital", 2],
-          ["==", "class", "city"],
-          [">", "rank", 3]
-        ]
-      ],
-      "layout": {
-        "icon-image": {
-          "base": 1,
-          "stops": [
-            [0, "circle-11"],
-            [8, ""]
-          ]
-        },
-        "icon-size": 0.4,
-        "text-anchor": {
-          "base": 1,
-          "stops": [
-            [0, "left"],
-            [8, "center"]
-          ]
-        },
-        "text-field": "{name:latin}\n{name:nonlatin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-justify": "left",
-        "text-offset": [0.5, 0.2],
-        "text-size": 10,
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "icon-opacity": 0.7,
-        "text-color": "rgb(117, 129, 145)",
-        "text-halo-blur": 1,
-        "text-halo-color": "rgb(242,243,240)",
-        "text-halo-width": 1
-      }
-    },
-    {
-      "id": "place_capital",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 12,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        [
-          "all",
-          ["==", "capital", 2],
-          ["==", "class", "city"]
-        ]
-      ],
-      "layout": {
-        "icon-image": {
-          "base": 1,
-          "stops": [
-            [0, "star-11"],
-            [8, ""]
-          ]
-        },
-        "icon-size": 1,
-        "text-anchor": {
-          "base": 1,
-          "stops": [
-            [0, "left"],
-            [8, "center"]
-          ]
-        },
-        "text-field": "{name:latin}\n{name:nonlatin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-justify": "left",
-        "text-offset": [0.5, 0.2],
-        "text-size": 14,
-        "text-transform": "uppercase",
-        "visibility": "visible"
-      },
-      "paint": {
-        "icon-opacity": 0.7,
-        "text-color": "rgb(117, 129, 145)",
-        "text-halo-blur": 1,
-        "text-halo-color": "rgb(242,243,240)",
-        "text-halo-width": 1
-      }
-    },
-    {
-      "id": "place_city_large",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 12,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        [
-          "all",
-          ["!=", "capital", 2],
-          ["<=", "rank", 3],
-          ["==", "class", "city"]
-        ]
-      ],
-      "layout": {
-        "icon-image": {
-          "base": 1,
-          "stops": [
-            [0, "circle-11"],
-            [8, ""]
-          ]
-        },
-        "icon-size": 0.4,
-        "text-anchor": {
-          "base": 1,
-          "stops": [
-            [0, "left"],
-            [8, "center"]
-          ]
-        },
-        "text-field": "{name:latin}\n{name:nonlatin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-justify": "left",
-        "text-offset": [0.5, 0.2],
-        "text-size": 14,
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "icon-opacity": 0.7,
-        "text-color": "rgb(117, 129, 145)",
-        "text-halo-blur": 1,
-        "text-halo-color": "rgb(242,243,240)",
-        "text-halo-width": 1
-      }
-    },
-    {
-      "id": "place_state",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 12,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        ["==", "class", "state"]
-      ],
-      "layout": {
-        "text-field": "{name:latin}\n{name:nonlatin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-size": 10,
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "text-color": "rgb(113, 129, 144)",
-        "text-halo-blur": 1,
-        "text-halo-color": "rgb(242,243,240)",
-        "text-halo-width": 1
-      }
-    },
-    {
-      "id": "place_country_other",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 8,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        ["==", "class", "country"],
-        ["!has", "iso_a2"]
-      ],
-      "layout": {
-        "text-field": "{name:latin}",
-        "text-font": [
-          "Metropolis Light Italic",
-          "Noto Sans Italic"
-        ],
-        "text-size": {
-          "base": 1,
-          "stops": [[0, 9], [6, 11]]
-        },
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "text-color": {
-          "base": 1,
-          "stops": [
-            [3, "rgb(157,169,177)"],
-            [4, "rgb(153, 153, 153)"]
-          ]
-        },
-        "text-halo-color": "rgba(236,236,234,0.7)",
-        "text-halo-width": 1.4
-      }
-    },
-    {
-      "id": "place_country_minor",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 8,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        ["==", "class", "country"],
-        [">=", "rank", 2],
-        ["has", "iso_a2"]
-      ],
-      "layout": {
-        "text-field": "{name:latin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-size": {
-          "base": 1,
-          "stops": [[0, 10], [6, 12]]
-        },
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "text-color": {
-          "base": 1,
-          "stops": [
-            [3, "rgb(157,169,177)"],
-            [4, "rgb(153, 153, 153)"]
-          ]
-        },
-        "text-halo-color": "rgba(236,236,234,0.7)",
-        "text-halo-width": 1.4
-      }
-    },
-    {
-      "id": "place_country_major",
-      "type": "symbol",
-      "metadata": {
-        "mapbox:group": "101da9f13b64a08fa4b6ac1168e89e5f"
-      },
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "maxzoom": 6,
-      "filter": [
-        "all",
-        ["==", "$type", "Point"],
-        ["<=", "rank", 1],
-        ["==", "class", "country"],
-        ["has", "iso_a2"]
-      ],
-      "layout": {
-        "text-anchor": "center",
-        "text-field": "{name:latin}",
-        "text-font": [
-          "Metropolis Regular",
-          "Noto Sans Regular"
-        ],
-        "text-size": {
-          "base": 1.4,
-          "stops": [
-            [0, 10],
-            [3, 12],
-            [4, 14]
-          ]
-        },
-        "text-transform": "uppercase",
-        "visibility": "none"
-      },
-      "paint": {
-        "text-color": {
-          "base": 1,
-          "stops": [
-            [3, "rgb(157,169,177)"],
-            [4, "rgb(153, 153, 153)"]
-          ]
-        },
-        "text-halo-color": "rgba(236,236,234,0.7)",
-        "text-halo-width": 1.4
-      }
-    },
-    {
       "id": "gradient",
       "type": "fill",
       "source": "ocean-vector",
@@ -713,104 +234,326 @@
         "visibility": "visible"
       }
     },
-        {
-      "id": "admin_countrylines_z10",
+    {
+      "id": "city_county_lines_admin_9",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "land_ohm_lines",
+      "minzoom": 11,
+      "maxzoom": 20,
+      "filter": [
+        "in",
+        ["get", "admin_level"],
+        ["literal", [9]]
+      ],
+      "layout": {
+        "visibility": "none",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": "rgba(164, 179, 178, 1)",
+        "line-dasharray": [3],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          10,
+          0.5
+        ]
+      }
+    },
+    {
+      "id": "city_county_lines_admin_7-8",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "land_ohm_lines",
+      "minzoom": 10,
+      "maxzoom": 20,
+      "filter": [
+        "in",
+        ["get", "admin_level"],
+        ["literal", [7, 8]]
+      ],
+      "layout": {
+        "visibility": "none",
+        "line-cap": "round",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": "rgba(204, 212, 210, 1)",
+        "line-dasharray": [3],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          10,
+          0.75
+        ]
+      }
+    },
+    {
+      "id": "admin_admin_5-6",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "land_ohm_lines",
+      "minzoom": 8,
+      "maxzoom": 20,
+      "filter": [
+        "in",
+        ["get", "admin_level"],
+        ["literal", [5, 6]]
+      ],
+      "layout": {
+        "visibility": "none",
+        "line-cap": "round",
+        "line-join": "round",
+        "line-miter-limit": 2
+      },
+      "paint": {
+        "line-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          7,
+          "rgba(205, 205, 207, 1)",
+          10,
+          "rgba(202, 202, 203, 1)"
+        ],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          8,
+          0.15,
+          10,
+          1.75
+        ]
+      }
+    },
+    {
+      "id": "state_lines_admin_4",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "land_ohm_lines",
+      "minzoom": 3,
+      "maxzoom": 20,
+      "filter": [
+        "all",
+        [
+          "==",
+          ["get", "admin_level"],
+          4
+        ],
+        [
+          "==",
+          ["get", "type"],
+          "administrative"
+        ]
+      ],
+      "layout": {
+        "visibility": "none",
+        "line-cap": "square",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6,
+          "rgba(168, 193, 183, 1)"
+        ],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          2,
+          0.4,
+          6,
+          0.75,
+          12,
+          2,
+          15,
+          3
+        ]
+      }
+    },
+    {
+      "id": "admin_admin3",
+      "type": "line",
+      "source": "osm",
+      "source-layer": "land_ohm_lines",
+      "minzoom": 5,
+      "maxzoom": 20,
+      "filter": [
+        "==",
+        ["get", "admin_level"],
+        3
+      ],
+      "layout": {
+        "visibility": "none",
+        "line-cap": "square",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": "rgba(168, 193, 183, 1)",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6,
+          0.75,
+          12,
+          2
+        ]
+      }
+    },
+    {
+      "id": "admin_country_lines_z10_case",
       "type": "line",
       "source": "osm",
       "source-layer": "land_ohm_lines",
       "minzoom": 0,
       "maxzoom": 20,
-      "filter": ["in", ["get", "admin_level"], ["literal", [1, 2]]],
-      "layout": {"visibility": "visible"},
+      "filter": [
+        "in",
+        ["get", "admin_level"],
+        ["literal", [1, 2]]
+      ],
+      "layout": {
+        "visibility": "none",
+        "line-cap": "square",
+        "line-join": "round"
+      },
       "paint": {
-        "line-color": "rgba(157, 169, 174, 1)",
-        "line-width": ["interpolate", ["linear"], ["zoom"], 0, 4, 8, 6],
-        "line-pattern": "woodblock-splotching-light",
-        "line-opacity": 1
+        "line-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          4,
+          "rgba(133, 147, 156, 0.1)",
+          6,
+          "#e3e6e8",
+          9,
+          "#f1f3f4"
+        ],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          6,
+          0,
+          12,
+          7,
+          15,
+          11
+        ]
       }
     },
-     {
-      "id": "country_points_labels-centroids",
-      "type": "symbol",
+    {
+      "id": "admin_country_lines_z10",
+      "type": "line",
       "source": "osm",
-      "source-layer": "land_ohm_centroids",
+      "source-layer": "land_ohm_lines",
       "minzoom": 0,
-      "maxzoom": 14,
+      "maxzoom": 20,
       "filter": [
-        "all",
-        ["==", ["get", "type"], "administrative"],
-        ["==", ["get", "admin_level"], 2]
+        "in",
+        ["get", "admin_level"],
+        ["literal", [1, 2]]
       ],
       "layout": {
         "visibility": "visible",
-        "text-field": ["get", "name"],
-        "text-size": [
+        "line-cap": "square",
+        "line-join": "round"
+      },
+      "paint": {
+        "line-color": [
           "interpolate",
           ["linear"],
           ["zoom"],
-          2,
-          11,
           4,
-          15,
+          "rgba(126, 144, 127, 1)",
           6,
-          14,
+          "rgba(147, 171, 148, 1)",
           8,
-          16
+          "rgba(177, 182, 177, 1)",
+          12,
+          "rgba(203, 212, 203, 1)"
         ],
-        "text-font": ["Eadui"],
-        "symbol-placement": "point",
-        "text-justify": "center",
-        "symbol-avoid-edges": false,
-        "text-transform": "uppercase",
-        "text-letter-spacing": 0.05
-      },
-      "paint": {
-        "text-color": "rgba(113, 110, 99, 1)",
-        "text-halo-width": 13,
-        "text-halo-color": "rgba(241, 233, 218, 1)",
-        "text-halo-blur": 2,
-        "text-opacity": 1,
-        "text-translate-anchor": "map"
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          0.25,
+          2,
+          0.75,
+          4,
+          1,
+          6,
+          2,
+          12,
+          2.5,
+          15,
+          4
+        ]
       }
     },
-     {
-      "id": "country_points_labels",
+    {
+      "id": "placearea_label",
       "type": "symbol",
       "source": "osm",
       "source-layer": "place_points_centroids",
-      "minzoom": 0,
-      "maxzoom": 14,
-      "filter": ["==", ["get", "type"], "country"],
+      "minzoom": 14,
+      "maxzoom": 24,
+      "filter": [
+        "==",
+        ["get", "type"],
+        "square"
+      ],
       "layout": {
+        "icon-image": "{type}-18",
         "visibility": "visible",
         "text-field": ["get", "name"],
         "text-size": [
           "interpolate",
           ["linear"],
           ["zoom"],
-          2,
-          11,
-          4,
-          15,
-          6,
           14,
           8,
-          16
+          18,
+          10
         ],
-        "text-font": ["Eadui"],
-        "symbol-placement": "point",
-        "text-justify": "center",
-        "symbol-avoid-edges": false,
-        "text-transform": "uppercase",
-        "text-letter-spacing": 0.05
+        "text-anchor": "top",
+        "text-offset": [0, 0.75],
+        "text-font": ["OpenHistorical"],
+        "icon-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          14,
+          0.75,
+          20,
+          1.4
+        ]
       },
       "paint": {
-        "text-color": "rgba(113, 110, 99, 1)",
-        "text-halo-width": 13,
-        "text-halo-color": "rgba(241, 233, 218, 1)",
-        "text-halo-blur": 2,
-        "text-opacity": 1,
-        "text-translate-anchor": "map"
+        "icon-color": "#000000",
+        "text-color": "#505050",
+        "text-halo-color": "rgba(255, 255, 255, 1)",
+        "text-halo-width": 0.5,
+        "text-halo-blur": 1,
+        "text-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          13.99,
+          0,
+          14,
+          1
+        ]
       }
     }
   ],
