@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenHistoricalMaps - Custom POI Markers</title>
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+        .info-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        .info-panel h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+        .info-panel p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .maplibregl-popup-content {
+            padding: 10px;
+        }
+        .maplibregl-popup-content h4 {
+            margin: 0 0 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="info-panel">
+        <h3>Instructions</h3>
+        <p>Edit the <code>pointsOfInterest</code> array in the code to add your locations.</p>
+        <p><strong>Format:</strong> [longitude, latitude, "Name", "Description"]</p>
+        <p><em>Note: longitude comes first!</em></p>
+    </div>
+
+    <script>
+        // ==============================================
+        // EDIT YOUR POINTS OF INTEREST HERE
+        // ==============================================
+        // IMPORTANT: Format is [LONGITUDE, LATITUDE, name, description]
+        // Longitude comes FIRST (this is different from Leaflet!)
+        const pointsOfInterest = [
+            [-74.0060, 40.7128, "New York City", "Example location 1"],
+            [-0.1278, 51.5074, "London", "Example location 2"],
+            [2.3522, 48.8566, "Paris", "Example location 3"],
+            [139.6503, 35.6762, "Tokyo", "Example location 4"],
+            [-122.4194, 37.7749, "San Francisco", "Example location 5"]
+        ];
+
+        // ==============================================
+        // MAP CONFIGURATION
+        // ==============================================
+        
+        // Initialize the map with OpenHistoricalMap style
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://www.openhistoricalmap.org/map-styles/main/main.json',
+            center: [-74.0060, 40.7128], // Default center [lng, lat]
+            zoom: 2
+        });
+
+        // Add navigation controls (zoom buttons)
+        map.addControl(new maplibregl.NavigationControl(), 'top-left');
+
+        // Add scale control
+        map.addControl(new maplibregl.ScaleControl({
+            maxWidth: 200,
+            unit: 'metric'
+        }), 'bottom-left');
+
+        // ==============================================
+        // ADD MARKERS AFTER MAP LOADS
+        // ==============================================
+        
+        map.on('load', function() {
+            const bounds = new maplibregl.LngLatBounds();
+            
+            pointsOfInterest.forEach(poi => {
+                const [lng, lat, name, description] = poi;
+                
+                // Create popup content
+                let popupHTML = `<h4>${name}</h4>`;
+                if (description) {
+                    popupHTML += `<p>${description}</p>`;
+                }
+                popupHTML += `<p style="font-size: 12px; color: #666;">Lng: ${lng}, Lat: ${lat}</p>`;
+                
+                // Create popup
+                const popup = new maplibregl.Popup({ offset: 25 })
+                    .setHTML(popupHTML);
+                
+                // Create marker
+                const marker = new maplibregl.Marker({ color: '#FF0000' })
+                    .setLngLat([lng, lat])
+                    .setPopup(popup)
+                    .addTo(map);
+                
+                // Extend bounds to include this marker
+                bounds.extend([lng, lat]);
+            });
+            
+            // Fit map to show all markers
+            if (pointsOfInterest.length > 0) {
+                map.fitBounds(bounds, {
+                    padding: 50,
+                    maxZoom: 15
+                });
+            }
+        });
+
+        // ==============================================
+        // OPTIONAL: DATE FILTERING
+        // ==============================================
+        // Uncomment the code below to filter the map by a specific year
+        // This is useful for viewing historical data from a specific time period
+        
+        /*
+        map.on('styledata', function() {
+            // Set the year you want to display (example: 1900)
+            const targetYear = 1900;
+            const targetDate = `${targetYear}-01-01`;
+            
+            // Apply date filter if the function exists
+            if (map.filterByDate) {
+                map.filterByDate(targetDate);
+            }
+        });
+        */
+
+    </script>
+</body>
+</html>
