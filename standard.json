@@ -637,7 +637,7 @@
         ],
         "symbol-placement": "point",
         "text-justify": "center",
-        "visibility": "visible",
+        "visibility": "none",
         "text-field": ["get", "name"],
         "text-max-width": 7
       },
@@ -703,7 +703,7 @@
         ],
         "symbol-placement": "point",
         "text-justify": "center",
-        "visibility": "visible",
+        "visibility": "none",
         "text-field": ["get", "name"],
         "text-max-width": 7
       },
