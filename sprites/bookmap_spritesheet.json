@@ -6,37 +6,44 @@
     "height": 553,
     "pixelRatio": 2
   },
-  "woodblock-paper": {
+  "dots_inverse": {
     "x": 2,
     "y": 557,
+    "width": 548,
+    "height": 553,
+    "pixelRatio": 2
+  },
+  "woodblock-paper": {
+    "x": 2,
+    "y": 1112,
     "width": 261,
     "height": 261,
     "pixelRatio": 2
   },
   "etch": {
     "x": 265,
-    "y": 557,
+    "y": 1112,
     "width": 101,
     "height": 65,
     "pixelRatio": 2
   },
   "stipple": {
     "x": 368,
-    "y": 557,
+    "y": 1112,
     "width": 50,
     "height": 50,
     "pixelRatio": 2
   },
   "etched_pattern": {
     "x": 420,
-    "y": 557,
+    "y": 1112,
     "width": 32,
     "height": 32,
     "pixelRatio": 2
   },
   "gradient": {
     "x": 454,
-    "y": 557,
+    "y": 1112,
     "width": 32,
     "height": 32,
     "pixelRatio": 2
