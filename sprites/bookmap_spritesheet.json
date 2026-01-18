@@ -13,15 +13,22 @@
     "height": 65,
     "pixelRatio": 2
   },
-  "etched_pattern": {
+  "stipple": {
     "x": 105,
+    "y": 265,
+    "width": 50,
+    "height": 50,
+    "pixelRatio": 2
+  },
+  "etched_pattern": {
+    "x": 157,
     "y": 265,
     "width": 32,
     "height": 32,
     "pixelRatio": 2
   },
   "gradient": {
-    "x": 139,
+    "x": 191,
     "y": 265,
     "width": 32,
     "height": 32,
