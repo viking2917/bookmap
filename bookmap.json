@@ -1,230 +1,157 @@
 {
-  "version": 8,
-  "name": "bookmap",
+  "version": 1,
+  "name": "Bookmap",
   "metadata": {
-    "maputnik:renderer": "mbgljs",
-    "maputnik:openmaptiles_access_token": "iMg3lueCZxkUUN5R9hPR"
+    "mapbox:autocomposite": false,
+    "mapbox:groups": {
+      "101da9f13b64a08fa4b6ac1168e89e5f": {
+        "collapsed": false,
+        "name": "Places"
+      },
+      "a14c9607bc7954ba1df7205bf660433f": {
+        "name": "Boundaries"
+      },
+      "b6371a3f2f5a9932464fa3867530a2e5": {
+        "collapsed": false,
+        "name": "Transportation"
+      }
+    },
+    "mapbox:type": "template",
+    "openmaptiles:mapbox:owner": "openmaptiles",
+    "openmaptiles:mapbox:source:url": "mapbox://openmaptiles.4qljc88t",
+    "openmaptiles:version": "3.x",
+    "maputnik:renderer": "mlgljs"
   },
-  "attribution": "<a href=\"https://www.openhistoricalmap.org/\">OpenHistoricalMap</a>",
   "sources": {
-    "osm": {
-      "type": "vector",
-      "tiles": [
-        "https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf"
-      ]
-    },
-    "ne": {
-      "type": "vector",
-      "tiles": [
-        "https://vtiles.openhistoricalmap.org/maps/ne/{z}/{x}/{y}.pbf"
-      ]
-    },
-    "osm_land": {
-      "type": "vector",
-      "tiles": [
-        "https://vtiles.openhistoricalmap.org/maps/osm_land/{z}/{x}/{y}.pbf"
-      ],
-      "minzoom": 0,
-      "maxzoom": 22,
-      "scheme": "xyz"
+    "maptiler-hillshade": {
+      "url": "https://api.maptiler.com/tiles/hillshade/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
+      "type": "raster"
     },
     "openmaptiles": {
       "type": "vector",
-      "url": "https://api.maptiler.com/tiles/v3-openmaptiles/tiles.json?key=iMg3lueCZxkUUN5R9hPR"
+      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=iMg3lueCZxkUUN5R9hPR"
     },
-    "ocean-vector" : {
-      "type": "vector",
-      "url": "https://api.maptiler.com/tiles/ocean/tiles.json?key=iMg3lueCZxkUUN5R9hPR"
+    "land": {
+      "url": "https://api.maptiler.com/tiles/land/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
+      "type": "vector"
+    },
+    "land-gradient": {
+      "url": "https://api.maptiler.com/tiles/land-gradient-dark/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
+      "type": "raster"
     }
   },
-  "sprite": "https://viking2917.github.io/bookmap/sprites/bookmap_spritesheet",
-  "glyphs": "https://www.openhistoricalmap.org/map-styles/fonts/{fontstack}/{range}.pbf",
+  "sprite": "https://openmaptiles.github.io/positron-gl-style/sprite",
+  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=iMg3lueCZxkUUN5R9hPR",
   "layers": [
     {
-      "id": "background-pattern",
-      "type": "background",
-      "minzoom": 0,
-      "maxzoom": 24,
-      "filter": ["all"],
+      "id": "Land Gradient Dark",
+      "type": "raster",
+      "source": "land-gradient",
       "layout": {
         "visibility": "visible"
       },
       "paint": {
-        "background-color": "rgba(207, 179, 125, 1)",
-        "background-pattern": "woodblock-paper"
+        "raster-hue-rotate": 210,
+        "raster-saturation": 0.5,
+        "raster-brightness-min": 0.5
       }
     },
     {
-      "id": "background",
-      "type": "background",
-      "minzoom": 0,
-      "maxzoom": 24,
-      "filter": ["all"],
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "background-color": "rgba(207, 179, 125, 1)",
-        "background-opacity": 0.29
-      }
-    },
-    {
-      "id": "coastline",
+      "id": "Land shadow-copy",
       "type": "line",
-      "paint": {
-        "line-color": "rgba(68, 121, 208, 1)",
-        "line-offset": 4,
-        "line-translate-anchor": "map",
-        "line-width": 5,
-        "line-pattern": "etch"
-      },
-      "filter": ["==", ["get", "class"], "ocean"],
-      "source": "openmaptiles",
-      "source-layer": "water",
-      "layout": {
-        "visibility": "none"
-      }
-    },
-    {
-      "id": "land-pattern",
-      "type": "fill",
-      "source": "osm_land",
+      "source": "land",
       "source-layer": "land",
-      "minzoom": 0,
-      "maxzoom": 24,
       "layout": {
         "visibility": "visible"
       },
       "paint": {
-        "fill-color": "rgba(236, 225, 203, 1)",
-        "fill-pattern": "woodblock-paper"
-      }
-    },
-    {
-      "id": "land",
-      "type": "fill",
-      "source": "osm_land",
-      "source-layer": "land",
-      "minzoom": 0,
-      "maxzoom": 24,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": "rgba(236, 225, 203, 1)",
-        "fill-opacity": 0
-      }
-    },
-    {
-      "id": "water_areas",
-      "type": "fill",
-      "source": "osm",
-      "source-layer": "water_areas",
-      "minzoom": 8,
-      "maxzoom": 24,
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "fill-color": "rgba(207, 179, 125, 1)",
-        "fill-opacity": 0.29
-      }
-    },
-    {
-      "id": "buildings_flat_ruins",
-      "type": "fill",
-      "source": "osm",
-      "source-layer": "other_areas",
-      "minzoom": 14,
-      "maxzoom": 24,
-      "filter": ["==", ["get", "type"], ""],
-      "layout": { "visibility": "none" },
-      "paint": {
-        "fill-color": "rgba(182, 143, 53, 1)",
-        "fill-opacity": 0.1
-      }
-    },
-    {
-      "id": "t_outlines",
-      "type": "line",
-      "source": "osm",
-      "source-layer": "other_areas",
-      "filter": ["==", ["get", "type"], "ruins"],
-      "layout": {
-        "visibility": "visible"
-      },
-      "paint": {
-        "line-color": "rgba(170, 44, 44, 1)",
+        "line-color": "rgba(37, 37, 37, 0.41)",
         "line-opacity": 1,
-        "line-width": 6,
-        "line-dasharray": []
-      }
-    },
-    {
-      "id": "etch",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "water",
-      "paint": {
-        "line-color": "#000",
-        "line-width": 1.5
-      },
-      "layout": {"visibility": "none"}
-    },
-    {
-      "id": "coastline-etch",
-      "type": "line",
-      "source": "openmaptiles",
-      "source-layer": "water",
-      "filter": ["==", ["get", "class"], "ocean"],
-      "paint": {
-        "line-width": 2,
-        "line-opacity": 0.6,
-        "line-pattern": "etch"
-      },
-      "layout": {"visibility": "none"}
-    },
-    {
-      "id": "bathymetry-fill",
-      "type": "fill",
-      "source": "ocean-vector",
-      "source-layer": "contour",
-      "paint": {
-        "fill-color": [
+        "line-translate": [
           "interpolate",
           ["linear"],
-          ["get", "depth"],
-          -6000,
-          "#000000",
-          -4000,
-          "#004d99",
-          -2000,
-          "#004d99",
-          -1000,
-          "#004d99",
-          -500,
-          "#004d99",
-          -50,
-          "#000000",
+          ["zoom"],
           0,
-          "#000000"
+          ["literal", [-0.75, -0.75]],
+          3,
+          ["literal", [-1, -1]],
+          5,
+          ["literal", [-1.5, -1.5]]
         ],
-        "fill-opacity": 0.5,
-        "fill-outline-color": "transparent"
-      },
-      "layout": { "visibility": "visible" }
-    },
-    {
-      "id": "bathymetry-lines",
-      "type": "line",
-      "source": "ocean-vector",
-      "source-layer": "contour",
-      "paint": {
-        "line-color": "#4a90e2",
         "line-width": 1
       },
-      "layout": {"visibility": "none"}
+      "filter": [
+        "==",
+        ["geometry-type"],
+        "Polygon"
+      ]
+    },
+    {
+      "id": "Land shadow",
+      "type": "line",
+      "source": "land",
+      "source-layer": "land",
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "rgba(133, 177, 219, 0.75)",
+        "line-opacity": 1,
+        "line-translate": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          ["literal", [0.75, 0.75]],
+          3,
+          ["literal", [1, 1]],
+          5,
+          ["literal", [1.5, 1.5]]
+        ],
+        "line-width": 1
+      },
+      "filter": [
+        "==",
+        ["geometry-type"],
+        "Polygon"
+      ]
+    },
+    {
+      "id": "Land",
+      "type": "fill",
+      "source": "land",
+      "source-layer": "land",
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "fill-color": "rgba(255, 251, 235, 0.67)",
+        "fill-opacity": 1
+      },
+      "filter": [
+        "==",
+        ["geometry-type"],
+        "Polygon"
+      ]
+    },
+    {
+      "id": "land-fill",
+      "type": "fill",
+      "source": "openmaptiles",
+      "paint": {
+        "fill-color": "rgba(255, 255, 255, 1)"
+      },
+      "layout": {"visibility": "none"},
+      "source-layer": "globallandcover"
+    },
+    {
+      "id": "hillside shading",
+      "type": "raster",
+      "source": "maptiler-hillshade",
+      "layout": {
+        "visibility": "visible"
+      }
     }
   ],
-  "id": "io6r61fxt"
+  "id": "positron"
 }
