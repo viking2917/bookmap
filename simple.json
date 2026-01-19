@@ -35,7 +35,7 @@
       "url": "https://api.maptiler.com/tiles/land/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "vector"
     },
-    "land-gradient-dark": {
+    "land-gradient": {
       "url": "https://api.maptiler.com/tiles/land-gradient-dark/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "raster"
     }
@@ -46,17 +46,45 @@
     {
       "id": "Land Gradient Dark",
       "type": "raster",
-      "source": "land-gradient-dark",
+      "source": "land-gradient",
       "layout": {
         "visibility": "visible"
       },
       "paint": {
-        "raster-resampling": "linear",
-        "raster-brightness-min": 0.5,
-        "raster-contrast": 0.7,
-        "raster-hue-rotate": 18,
-        "raster-opacity": 0.5
+        "raster-hue-rotate": 210,
+        "raster-saturation": 0.5,
+        "raster-brightness-min": 0.5
       }
+    },
+    {
+      "id": "Land shadow-copy",
+      "type": "line",
+      "source": "land",
+      "source-layer": "land",
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "line-color": "rgba(37, 37, 37, 0.41)",
+        "line-opacity": 1,
+        "line-translate": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          ["literal", [-0.75, -0.75]],
+          3,
+          ["literal", [-1, -1]],
+          5,
+          ["literal", [-1.5, -1.5]]
+        ],
+        "line-width": 1
+      },
+      "filter": [
+        "==",
+        ["geometry-type"],
+        "Polygon"
+      ]
     },
     {
       "id": "Land shadow",
@@ -67,7 +95,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "hsl(209, 54%, 69%)",
+        "line-color": "rgba(133, 177, 219, 0.75)",
         "line-opacity": 1,
         "line-translate": [
           "interpolate",
@@ -97,7 +125,7 @@
         "visibility": "visible"
       },
       "paint": {
-        "fill-color": "hsl(48, 100%, 96%)",
+        "fill-color": "rgba(255, 251, 235, 0.67)",
         "fill-opacity": 1
       },
       "filter": [
