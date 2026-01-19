@@ -30,6 +30,10 @@
     "ocean-vector": {
       "type": "vector",
       "url": "https://api.maptiler.com/tiles/ocean/tiles.json?key=iMg3lueCZxkUUN5R9hPR"
+    },
+    "land-gradient-dark": {
+      "url": "https://api.maptiler.com/tiles/land-gradient-dark/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
+      "type": "raster"
     }
   },
   "sprite": "https://openmaptiles.github.io/positron-gl-style/sprite",
@@ -67,6 +71,22 @@
       "paint": {
         "fill-antialias": true,
         "fill-color": "rgb(194, 200, 202)"
+      }
+    },
+    {
+      "id": "Land Gradient",
+      "type": "raster",
+      "source": "land-gradient",
+      "layout": {
+        "visibility": "visible"
+      },
+      "paint": {
+        "raster-brightness-max": 1,
+        "raster-brightness-min": 0,
+        "raster-contrast": 0.05,
+        "raster-hue-rotate": 18,
+        "raster-resampling": "linear",
+        "raster-saturation": 0
       }
     },
     {
@@ -216,16 +236,42 @@
           "interpolate",
           ["linear"],
           ["get", "depth"],
-          -6000,
-          "#cccccc",
-          -50,
-          "#0a0a0a"
+-6000,
+"rgba(126, 126, 126, 0.3)", 
+-4000,
+"rgba(106, 106, 106, 0.3)", 
+-3000,
+"rgba(91, 91, 91, 0.3)",    
+-2000,
+"rgba(76, 76, 76, 0.3)",    
+-1000,
+"rgba(62, 62, 62, 0.3)",    
+-500,
+"rgba(47, 47, 47, 0.3)",    
+-200,
+"rgba(33, 33, 33,0.3)",    
+-100,
+"rgba(20, 20, 20, 0.3)",    
+-50,
+"rgba(10, 10, 10, 0.5)"
         ],
-        "fill-opacity": 0.3,
+        "fill-opacity": 1,
         "fill-outline-color": "transparent"
       },
       "layout": {
         "visibility": "visible"
+      }
+    },
+    {
+      "id": "gradient",
+      "type": "line",
+      "source": "ocean-vector",
+      "source-layer": "contour",
+      "paint": {
+         "line-color": "#445",
+    "line-width": 2,
+    "line-opacity": 0.8
+        
       }
     }
   ],
