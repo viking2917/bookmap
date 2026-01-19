@@ -76,7 +76,7 @@
     {
       "id": "Land Gradient",
       "type": "raster",
-      "source": "land-gradient",
+      "source": "land-gradient-dark",
       "layout": {
         "visibility": "visible"
       },
