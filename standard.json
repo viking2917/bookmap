@@ -263,7 +263,7 @@
       }
     },
     {
-      "id": "gradient",
+      "id": "gradient1",
       "type": "line",
       "source": "ocean-vector",
       "source-layer": "contour",
