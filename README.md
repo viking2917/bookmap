@@ -3,6 +3,9 @@
 style was
   "sprite": "https://www.openhistoricalmap.org/map-styles/woodblock/woodblock_spritesheet",
 
+## the style
+
+I can no longer find the source of the paper texture I used, but it was open source via pixabay.
 
 ## code
 
