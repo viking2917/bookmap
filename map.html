@@ -417,7 +417,7 @@
       const bounds = new maplibregl.LngLatBounds();
       pointsOfInterest.forEach(poi => bounds.extend([poi[1], poi[0]]));
       if (pointsOfInterest.length > 0) {
-        map.fitBounds(bounds, { padding: 100, maxZoom: 15 });
+        map.fitBounds(bounds, { padding: 200, maxZoom: 15 });
       }
     }
 

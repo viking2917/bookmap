@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Map Sprites</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            max-width: 800px; 
-            margin: 50px auto; 
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
             padding: 20px;
         }
+
         .sprite-info {
             background: #f5f5f5;
             padding: 15px;
             border-radius: 5px;
             margin: 20px 0;
         }
+
         code {
             background: #333;
             color: #fff;
@@ -23,10 +26,28 @@
         }
     </style>
 </head>
+
 <body>
+
+
+    <h2>Example maps</h2>
+
+    <ul>
+        <li><a href="map.html">map.html - A simple map with a "bookish" style</a></li>
+        <li><a href="map_openhistorical.html">map_openhistorical.html - The same style except incorporates Open
+                Historical
+                Maps data layers,
+                to include countries/kingdoms. The map in my example is set at 1187 AD.</a></li>
+    </ul>
+
+    A simple map with a "bookish" <style>
+        The same style except incorporates Open Historical Maps data layers,
+        to include countries/kingdoms. The map in my example is set at 1187 AD.
+    </style>
+
     <h1>Map Sprite Set</h1>
     <p>Available sprites for use in maps.</p>
-    
+
     <div class="sprite-info">
         <h2>Usage</h2>
         <p>Base URL: <code id="baseUrl"></code></p>
@@ -37,10 +58,10 @@
     </div>
 
     <h2>Files</h2>
-            <li><a href="bookmap.json">bookmap.json</a> - Style file</li>
-             <li><a href="standard.json">standard.json</a> - Style file</li>
-    <ul>
 
+    <ul>
+        <li><a href="bookmap.json">bookmap.json</a> - Style file</li>
+        <li><a href="standard.json">standard.json</a> - Style file</li>
     </ul>
     <ul>
         <li><a href="sprites/bookmap_spritesheet.json">bookmap_spritesheet.json</a> - Sprite metadata</li>
@@ -55,4 +76,5 @@
         document.getElementById('spriteUrl').textContent = spriteUrl;
     </script>
 </body>
+
 </html>
