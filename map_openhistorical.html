@@ -236,11 +236,10 @@
     // ==============================================
 
     // Initialize the map with OpenHistoricalMap style
-    // nope use our own.
     //  style: 'https://unpkg.com/@openhistoricalmap/map-styles@latest/dist/woodblock/woodblock.json',
     const map = new maplibregl.Map({
       container: 'map',
-      style: 'https://viking2917.github.io/bookmap/bookmap.json',
+      style: 'https://viking2917.github.io/bookmap/bookmap_openhistoricalmap.json',
       center: [rome[0], rome[1]], // Default center [lng, lat]
       zoom: 4,
       preserveDrawingBuffer: true

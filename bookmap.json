@@ -38,6 +38,12 @@
     "land-gradient": {
       "url": "https://api.maptiler.com/tiles/land-gradient-dark/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "raster"
+    },
+    "osm": {
+      "type": "vector",
+      "tiles": [
+        "https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf"
+      ]
     }
   },
   "sprite": "https://openmaptiles.github.io/positron-gl-style/sprite",
@@ -136,62 +142,12 @@
       ]
     },
     {
-      "id": "land-fill",
-      "type": "fill",
-      "source": "openmaptiles",
-      "paint": {
-        "fill-color": "rgba(255, 255, 255, 1)"
-      },
-      "layout": {"visibility": "none"},
-      "source-layer": "globallandcover"
-    },
-    {
       "id": "hillside shading",
       "type": "raster",
       "source": "maptiler-hillshade",
       "layout": {
         "visibility": "visible"
       }
-    },
-   {
-      "id": "Country labels",
-      "type": "symbol",
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "minzoom": 2,
-      "maxzoom": 12,
-      "layout": {
-        "symbol-sort-key": ["to-number", ["get", "rank"]],
-        "text-field": "{name:en}",
-        "text-font": ["Noto Serif Bold"],
-        "text-max-width": 6.25,
-        "text-size": [
-          "interpolate",
-          ["linear", 1],
-          ["zoom"],
-          4.99,
-          ["case", [">", ["get", "rank"], 2], 0, 11],
-          5,
-          ["case", [">", ["get", "rank"], 2], 13, 14],
-          7,
-          ["case", [">", ["get", "rank"], 2], 17, 19]
-        ],
-        "text-transform": "none",
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-color": {
-          "stops": [
-            [2, "hsl(302, 16%, 36%)"],
-            [10, "hsl(273, 33%, 22%)"]
-          ]
-        },
-        "text-halo-blur": 1,
-        "text-halo-color": "hsla(0, 0%, 100%, 0.8)",
-        "text-halo-width": 0.8
-      },
-      "metadata": {},
-      "filter": ["all", ["==", "class", "country"], ["!=", "iso_a2", "VA"]]
     }
   ],
   "id": "positron"
