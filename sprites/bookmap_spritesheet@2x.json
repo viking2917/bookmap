@@ -1,58 +1,9 @@
 {
-  "dots": {
+  "paper": {
     "x": 2,
     "y": 2,
-    "width": 548,
-    "height": 553,
-    "pixelRatio": 2
-  },
-  "dots_inverse": {
-    "x": 2,
-    "y": 557,
-    "width": 548,
-    "height": 553,
-    "pixelRatio": 2
-  },
-  "woodblock-paper": {
-    "x": 2,
-    "y": 1112,
-    "width": 261,
-    "height": 261,
-    "pixelRatio": 2
-  },
-  "paper": {
-    "x": 265,
-    "y": 1112,
     "width": 256,
     "height": 256,
-    "pixelRatio": 2
-  },
-  "etch": {
-    "x": 2,
-    "y": 1375,
-    "width": 101,
-    "height": 65,
-    "pixelRatio": 2
-  },
-  "stipple": {
-    "x": 105,
-    "y": 1375,
-    "width": 50,
-    "height": 50,
-    "pixelRatio": 2
-  },
-  "etched_pattern": {
-    "x": 157,
-    "y": 1375,
-    "width": 32,
-    "height": 32,
-    "pixelRatio": 2
-  },
-  "gradient": {
-    "x": 191,
-    "y": 1375,
-    "width": 32,
-    "height": 32,
     "pixelRatio": 2
   }
 }
