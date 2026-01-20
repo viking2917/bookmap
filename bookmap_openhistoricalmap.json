@@ -149,7 +149,7 @@
         "fill-color": "rgba(255, 255, 255, 1)"
       },
       "layout": {
-        "visibility": "visible"
+        "visibility": "none"
       },
       "source-layer": "globallandcover"
     },
