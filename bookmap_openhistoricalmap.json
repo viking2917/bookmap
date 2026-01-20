@@ -27,10 +27,6 @@
       "url": "https://api.maptiler.com/tiles/hillshade/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "raster"
     },
-    "openmaptiles": {
-      "type": "vector",
-      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=iMg3lueCZxkUUN5R9hPR"
-    },
     "land": {
       "url": "https://api.maptiler.com/tiles/land/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "vector"
@@ -143,18 +139,6 @@
         ["geometry-type"],
         "Polygon"
       ]
-    },
-    {
-      "id": "land-fill",
-      "type": "fill",
-      "source": "openmaptiles",
-      "paint": {
-        "fill-color": "rgba(255, 255, 255, 1)"
-      },
-      "layout": {
-        "visibility": "none"
-      },
-      "source-layer": "globallandcover"
     },
     {
       "id": "hillside shading",
