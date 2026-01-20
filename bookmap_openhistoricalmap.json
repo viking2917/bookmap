@@ -46,7 +46,7 @@
       ]
     }
   },
-  "sprite": "https://openmaptiles.github.io/positron-gl-style/sprite",
+  "sprite": "https://viking2917.github.io/bookmap/sprites/bookmap_spritesheet",
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=iMg3lueCZxkUUN5R9hPR",
   "layers": [
     {
