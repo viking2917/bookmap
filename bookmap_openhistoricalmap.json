@@ -177,7 +177,7 @@
         ["literal", [1, 2]]
       ],
       "layout": {
-        "visibility": "none",
+        "visibility": "visible",
         "line-cap": "square",
         "line-join": "round"
       },
