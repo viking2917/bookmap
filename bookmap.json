@@ -36,7 +36,7 @@
       "type": "vector"
     },
     "land-gradient": {
-      "url": "https://api.maptiler.com/tiles/land-gradient/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
+      "url": "https://api.maptiler.com/tiles/land-gradient-dark/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "raster"
     }
   },
@@ -44,13 +44,15 @@
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=iMg3lueCZxkUUN5R9hPR",
   "layers": [
     {
-      "id": "Land Gradient",
+      "id": "Land Gradient Dark",
       "type": "raster",
       "source": "land-gradient",
       "layout": {
         "visibility": "visible"
       },
       "paint": {
+        "raster-opacity": 0.4,
+        "raster-hue-rotate": 210
       }
     },
     {
@@ -59,7 +61,9 @@
       "source": "land",
       "source-layer": "land",
       "layout": {
-        "visibility": "visible"
+        "visibility": "visible",
+        "line-cap": "butt",
+        "line-join": "miter"
       },
       "paint": {
         "line-color": "rgba(37, 37, 37, 0.41)",
@@ -75,7 +79,7 @@
           5,
           ["literal", [-1.5, -1.5]]
         ],
-        "line-width": 1
+        "line-width": 3
       },
       "filter": [
         "==",
