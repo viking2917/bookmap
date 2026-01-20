@@ -27,10 +27,6 @@
       "url": "https://api.maptiler.com/tiles/hillshade/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "raster"
     },
-    "openmaptiles": {
-      "type": "vector",
-      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=iMg3lueCZxkUUN5R9hPR"
-    },
     "land": {
       "url": "https://api.maptiler.com/tiles/land/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "vector"
@@ -38,12 +34,6 @@
     "land-gradient": {
       "url": "https://api.maptiler.com/tiles/land-gradient-dark/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "raster"
-    },
-    "osm": {
-      "type": "vector",
-      "tiles": [
-        "https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf"
-      ]
     }
   },
   "sprite": "https://viking2917.github.io/bookmap/sprites/bookmap_spritesheet",
