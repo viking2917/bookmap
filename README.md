@@ -13,6 +13,8 @@ Some nomenclature: *tiles* are small, fixed-size chunks of geographic data—ras
 
 This repo is the result of my explorations.
 
+![Castles](images/mediterranean.png)
+
 I created a Maplibre "style" that renders somewhat like the examples I mentioned. I've created two styles, the first is a simple style ([bookmap.json](bookmap.json)) that renders key elements: the land, a "hillside shading" (what I used to call Google Maps Terrain), a background "paper" image to give the land a vintage look, and a "land gradient" from MapTiler that gives some color and shading to the ocean, and coastlines in particular. I wanted to create a coastal hatching pattern, but that seems a bridge too far for me at the moment. 
 
 Along the way, I discovered Open Historical Maps, a super cool project that links historical geographical data to the maps. (I.e what were the geographic boundaries of the Holy Roman Empire in 1187AD?). I created [another style](bookmap_openhistoricalmap.json) another style that shows major kingdoms and their boundaries, and my example map is set during the year 1187AD as I have been studying the Third Crusade which began around then. 
