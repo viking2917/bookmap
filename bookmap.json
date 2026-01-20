@@ -46,7 +46,7 @@
       ]
     }
   },
-  "sprite": "https://openmaptiles.github.io/positron-gl-style/sprite",
+  "sprite": "https://viking2917.github.io/bookmap/sprites/bookmap_spritesheet",
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=iMg3lueCZxkUUN5R9hPR",
   "layers": [
     {
@@ -57,8 +57,8 @@
         "visibility": "visible"
       },
       "paint": {
-        "raster-opacity": 0.4,
-        "raster-hue-rotate": 210
+        "raster-hue-rotate": 230,
+        "raster-opacity": 0.4
       }
     },
     {
