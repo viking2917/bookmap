@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 8,
   "name": "Bookmap",
   "metadata": {
     "mapbox:autocomposite": false,
@@ -36,7 +36,7 @@
       "type": "vector"
     },
     "land-gradient": {
-      "url": "https://api.maptiler.com/tiles/land-gradient-dark/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
+      "url": "https://api.maptiler.com/tiles/land-gradient/tiles.json?key=iMg3lueCZxkUUN5R9hPR",
       "type": "raster"
     }
   },
@@ -44,16 +44,13 @@
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=iMg3lueCZxkUUN5R9hPR",
   "layers": [
     {
-      "id": "Land Gradient Dark",
+      "id": "Land Gradient",
       "type": "raster",
       "source": "land-gradient",
       "layout": {
         "visibility": "visible"
       },
       "paint": {
-        "raster-hue-rotate": 210,
-        "raster-saturation": 0.5,
-        "raster-brightness-min": 0.5
       }
     },
     {
