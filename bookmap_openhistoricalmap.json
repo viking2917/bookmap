@@ -161,98 +161,7 @@
         "visibility": "visible"
       }
     },
-    {
-      "id": "Country labels",
-      "type": "symbol",
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "minzoom": 2,
-      "maxzoom": 12,
-      "layout": {
-        "symbol-sort-key": [
-          "to-number",
-          ["get", "rank"]
-        ],
-        "text-field": "{name:en}",
-        "text-font": [
-          "Noto Serif Bold"
-        ],
-        "text-max-width": 6.25,
-        "text-size": [
-          "interpolate",
-          ["linear", 1],
-          ["zoom"],
-          4.99,
-          [
-            "case",
-            [">", ["get", "rank"], 2],
-            0,
-            11
-          ],
-          5,
-          [
-            "case",
-            [">", ["get", "rank"], 2],
-            13,
-            14
-          ],
-          7,
-          [
-            "case",
-            [">", ["get", "rank"], 2],
-            17,
-            19
-          ]
-        ],
-        "text-transform": "none",
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-color": {
-          "stops": [
-            [2, "hsl(302, 16%, 36%)"],
-            [10, "hsl(273, 33%, 22%)"]
-          ]
-        },
-        "text-halo-blur": 1,
-        "text-halo-color": "hsla(0, 0%, 100%, 0.8)",
-        "text-halo-width": 0.8
-      },
-      "metadata": {},
-      "filter": [
-        "all",
-        ["==", "class", "country"],
-        ["!=", "iso_a2", "VA"]
-      ]
-    },
-    {
-      "id": "ohm-country-names",
-      "type": "symbol",
-      "source": "osm",
-      "filter": ["all"],
-      "layout": {
-        "text-field": [
-          "coalesce",
-          ["get", "name"],
-          ["get", "name:en"],
-          ["get", "name:local"]
-        ],
-        "text-font": [
-          "Open Sans Regular"
-        ],
-        "text-size": 12,
-        "text-offset": [0, 0.5],
-        "text-anchor": "top",
-        "visibility": "visible"
-      },
-      "paint": {
-        "text-color": "#222",
-        "text-halo-color": "#fff",
-        "text-halo-width": 1
-      },
-      "source-layer": "land_ohm_lines"
-    },
-    {
+     {
       "id": "admin_country_lines_z10",
       "type": "line",
       "source": "osm",
@@ -265,7 +174,7 @@
         ["literal", [1, 2]]
       ],
       "layout": {
-        "visibility": "visible",
+        "visibility": "none",
         "line-cap": "square",
         "line-join": "round"
       },
@@ -303,7 +212,84 @@
       }
     },
     {
-      "id": "placearea_label",
+      "id": "country_points_labels_cen",
+      "type": "symbol",
+      "source": "osm",
+      "source-layer": "land_ohm_centroids",
+      "maxzoom": 12,
+      "filter": [
+        "all",
+        [
+          "==",
+          ["get", "type"],
+          "administrative"
+        ],
+        [
+          "==",
+          ["get", "admin_level"],
+          2
+        ]
+      ],
+      "layout": {
+        "symbol-sort-key": [
+          "get",
+          "area_km2"
+        ],
+        "text-line-height": 1,
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          8,
+          3,
+          12,
+          6,
+          20,
+          10,
+          22
+        ],
+        "symbol-avoid-edges": false,
+        "text-font": [
+          "OpenHistorical Bold"
+        ],
+        "symbol-placement": "point",
+        "text-justify": "center",
+        "visibility": "visible",
+        "text-field": ["get", "name"],
+        "text-max-width": 7
+      },
+      "paint": {
+        "text-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          "#495049",
+          5,
+          "#6d786d"
+        ],
+        "text-halo-width": 1.5,
+        "text-halo-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          "rgba(252, 255, 254, 0.75)",
+          3,
+          "rgba(240, 244, 216, 1)",
+          5,
+          "rgba(246,247,227, 1)",
+          7,
+          "rgba(255, 255, 255, 1)"
+        ],
+        "text-halo-blur": 1,
+        "text-opacity": 1,
+        "text-translate-anchor": "map"
+      }
+    },
+    {
+      "id": "country_points_labels",
       "type": "symbol",
       "source": "osm",
       "source-layer": "place_points_centroids",
@@ -312,49 +298,60 @@
       "filter": [
         "==",
         ["get", "type"],
-        "square"
+        "country"
       ],
       "layout": {
-        "icon-image": "{type}-18",
-        "visibility": "visible",
-        "text-field": ["get", "name"],
+        "text-line-height": 1,
         "text-size": [
           "interpolate",
           ["linear"],
           ["zoom"],
-          14,
+          0,
           8,
-          18,
-          10
-        ],
-        "text-anchor": "top",
-        "text-offset": [0, 0.75],
-        "text-font": ["OpenHistorical"],
-        "icon-size": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          14,
-          0.75,
+          3,
+          12,
+          6,
           20,
-          1.4
-        ]
+          10,
+          22
+        ],
+        "symbol-avoid-edges": false,
+        "text-font": [
+          "OpenHistorical Bold"
+        ],
+        "symbol-placement": "point",
+        "text-justify": "center",
+        "visibility": "visible",
+        "text-field": ["get", "name"],
+        "text-max-width": 7
       },
       "paint": {
-        "icon-color": "#000000",
-        "text-color": "#505050",
-        "text-halo-color": "rgba(255, 255, 255, 1)",
-        "text-halo-width": 0.5,
-        "text-halo-blur": 1,
-        "text-opacity": [
+        "text-color": [
           "interpolate",
           ["linear"],
           ["zoom"],
-          13.99,
           0,
-          14,
-          1
-        ]
+          "#495049",
+          5,
+          "#6d786d"
+        ],
+        "text-halo-width": 1.5,
+        "text-halo-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          "rgba(252, 255, 254, 0.75)",
+          3,
+          "rgba(240, 244, 216, 1)",
+          5,
+          "rgba(246,247,227, 1)",
+          7,
+          "rgba(255, 255, 255, 1)"
+        ],
+        "text-halo-blur": 1,
+        "text-opacity": 1,
+        "text-translate-anchor": "map"
       }
     }
   ],
