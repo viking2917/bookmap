@@ -64,7 +64,7 @@
       }
     },
     {
-      "id": "Land shadow-copy",
+      "id": "Land shadow north",
       "type": "line",
       "source": "land",
       "source-layer": "land",
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "id": "Land shadow",
+      "id": "Land shadow south",
       "type": "line",
       "source": "land",
       "source-layer": "land",
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "id": "Land",
+      "id": "Land Texture",
       "type": "fill",
       "source": "land",
       "source-layer": "land",
@@ -153,5 +153,5 @@
       }
     }
   ],
-  "id": "positron"
+  "id": "bookmap"
 }
