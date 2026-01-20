@@ -7,7 +7,7 @@ in a style like what is seen in books.
 
 ChatGPT summarizes things more quickly than I can:
 
-> OpenStreetMap (OSM) is a global, community-maintained open dataset of geographic features—roads, buildings, boundaries, places, and more—that serves as a foundational source for many modern maps. Tools like OpenMapTiles transform raw OSM data into performant vector tiles, which can then be styled and rendered in the browser or native apps using MapLibre GL, an open-source map rendering engine derived from Mapbox GL. MapTiler builds on this ecosystem by providing hosted vector and raster tiles, terrain, hillshade, and style tools that are compatible with MapLibre, making it easier to deploy production maps without running your own tile infrastructure. Together with related standards and technologies—such as vector tiles (MVT), GeoJSON, sprites, glyphs, and style specifications—this stack enables highly customizable, scalable, and license-friendly web mapping, giving developers full control over cartography while avoiding proprietary lock-in.
+> **OpenStreetMap** (OSM) is a global, community-maintained open dataset of geographic features—roads, buildings, boundaries, places, and more—that serves as a foundational source for many modern maps. Tools like **OpenMapTiles** transform raw OSM data into performant vector tiles, which can then be styled and rendered in the browser or native apps using **MapLibre GL**, an open-source map rendering engine derived from Mapbox GL. **MapTiler** builds on this ecosystem by providing hosted vector and raster tiles, terrain, hillshade, and style tools that are compatible with MapLibre, making it easier to deploy production maps without running your own tile infrastructure. Together with related standards and technologies—such as vector *tiles* (MVT), GeoJSON, *sprites*, glyphs, and *style specifications*—this stack enables highly customizable, scalable, and license-friendly web mapping, giving developers full control over cartography while avoiding proprietary lock-in.
 
 Some nomenclature: *tiles* are small, fixed-size chunks of geographic data—raster images or vector features—served at multiple zoom levels to make maps fast and scalable, while *sprites* are compact image sheets that bundle many small icons and patterns (like markers, shields, or line textures) into a single file to reduce network requests. Vector tiles carry geometry and attributes that are styled client-side, enabling dynamic cartography, whereas sprites provide the visual symbols referenced by a map style for consistent rendering.
 
@@ -15,18 +15,18 @@ This repo is the result of my explorations.
 
 I created a Maplibre "style" that renders somewhat like the examples I mentioned. I've created two styles, the first is a simple style ([bookmap.json](bookmap.json)) that renders key elements: the land, a "hillside shading" (what I used to call Google Maps Terrain), a background "paper" image to give the land a vintage look, and a "land gradient" from MapTiler that gives some color and shading to the ocean, and coastlines in particular. I wanted to create a coastal hatching pattern, but that seems a bridge too far for me at the moment. 
 
-Along the way, I discovered Open Historical Maps, a super cool project that links historical geographical data to the maps. (I.e what were the geographic boundaries of the Holy Roman Empire in 1187AD?). I created [another style](bookmap_openhistorical.json) another style that shows major kingdoms and their boundaries, and my example map is set during the year 1187AD as I have been studying the Third Crusade which began around then. 
+Along the way, I discovered Open Historical Maps, a super cool project that links historical geographical data to the maps. (I.e what were the geographic boundaries of the Holy Roman Empire in 1187AD?). I created [another style](bookmap_openhistoricalmap.json) another style that shows major kingdoms and their boundaries, and my example map is set during the year 1187AD as I have been studying the Third Crusade which began around then. 
 
 I then created two map examples that show these two styles rendered, along with custom POI markers that again emulate what you might see in a "bookish" map. 
 
-Click [this link](index.html) to browse around live examples.
+Click [this link](https://viking2917.github.io/bookmap/index.html) to browse around live examples.
 
 Much of this code was created with Claude.AI. Caveat emptor.
 
 ## Live example maps
 
-* [Simple map](map.html) - shows the base style of ocean gradient, terrain, and paper texture background.
-* [Historical map](map_openhistorical.html) - the base map, plus inclusion of Open Historical Map kingdom and kingdom boundary data. Year set to 1187 AD.
+* [Simple map](https://viking2917.github.io/bookmap/map.html) - shows the base style of ocean gradient, terrain, and paper texture background.
+* [Historical map](https://viking2917.github.io/bookmap/map_openhistorical.html) - the base map, plus inclusion of Open Historical Map kingdom and kingdom boundary data. Year set to 1187 AD.
 
 
 Open the example maps to see the results. The map pages allow you to
