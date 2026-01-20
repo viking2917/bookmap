@@ -161,7 +161,7 @@
         "visibility": "visible"
       }
     },
-     {
+    {
       "id": "admin_country_lines_z10",
       "type": "line",
       "source": "osm",
@@ -216,7 +216,7 @@
       "type": "symbol",
       "source": "osm",
       "source-layer": "land_ohm_centroids",
-      "maxzoom": 12,
+      "maxzoom": 24,
       "filter": [
         "all",
         [
@@ -256,7 +256,11 @@
         "symbol-placement": "point",
         "text-justify": "center",
         "visibility": "visible",
-        "text-field": ["get", "name"],
+        "text-field": [
+          "coalesce",
+          ["get", "name_en"],
+          ["get", "name"]
+        ],
         "text-max-width": 7
       },
       "paint": {
@@ -322,7 +326,11 @@
         "symbol-placement": "point",
         "text-justify": "center",
         "visibility": "visible",
-        "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
+        "text-field": [
+          "coalesce",
+          ["get", "name_en"],
+          ["get", "name"]
+        ],
         "text-max-width": 7
       },
       "paint": {
