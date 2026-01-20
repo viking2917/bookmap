@@ -225,9 +225,9 @@
           "administrative"
         ],
         [
-          "==",
+          "<=",
           ["get", "admin_level"],
-          2
+          5
         ]
       ],
       "layout": {
