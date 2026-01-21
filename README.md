@@ -19,6 +19,8 @@ I created a Maplibre "style" that renders somewhat like the examples I mentioned
 
 Along the way, I discovered Open Historical Maps, a super cool project that links historical geographical data to the maps. (I.e what were the geographic boundaries of the Holy Roman Empire in 1187AD?). I created [another style](bookmap_openhistoricalmap.json) another style that shows major kingdoms and their boundaries, and my example map is set during the year 1187AD as I have been studying the Third Crusade which began around then. 
 
+What vintage map would be complete without a compass rose? So I included one. You can move it around the map by click & drag if it obscures something.
+
 I then created two map examples that show these two styles rendered, along with custom POI markers that again emulate what you might see in a "bookish" map. 
 
 Click [this link](https://viking2917.github.io/bookmap/index.html) to browse around live examples.
@@ -45,6 +47,8 @@ The format for POI entry is an array of lat/lon/name/description entries:
 ]
 ```
 
+**Export Map** uses some custom code to export the canvas to an image file. I have also included the [WaterGIS MapLibre Export plugin](https://maplibre-gl-export.water-gis.com/) for more export options, which you can invoke using the printer icon at bottom left of the map.
+
 ## Inspirations
 
 I looked at a number of interesting articles about map styles, vintage map styles in particular. I found these articles particularly interesting and helpful. 
@@ -57,6 +61,8 @@ https://andywoodruff.com/posts/2024/qgis-hand-drawn-maps/
 https://docs.maptiler.com/guides/map-design/land-gradient/  
 https://www.mapbox.com/blog/new-bathymetry-tileset-and-style-for-marine-maps  
 https://www.mapeffects.co/tutorials/ocean-hatching  
+https://www.sarahbellmaps.com/typography-for-topography-belltopo-sans-free-font/  
+
 
 ## Process notes
 
@@ -68,7 +74,11 @@ The code for this repo (including the map pages, the styles, and the sprites) ar
 
 As a courtesy you should get your own MapTiler API key and replace the key used in bookmap.json.
 
+## Notes to self:
+
 I had to enable maplibregl dates to for the date-setting code to work in map.html (https://github.com/OpenHistoricalMap/maplibre-gl-dates/)
+
+The compass rose was exported at 250x250, then scaled to 0.5 in the map.
 
 ## Tiles
 
@@ -76,15 +86,17 @@ My styles use a few different tiles, which you can see referenced in the style f
 
 As mentioned, get your own API key, please don't use mine.
 
-* maptiler-hillshade: used to show terrain
-* land: a maptiler set used to draw lines around coastlines
-* land-gradient: a maptiler tile set used to create a dark gradient around coastlines, extending out into oceans
-* osm: an Open Historical Map tileset used to render historical kingdom names and boundaries (only used by map_openhistorical.html)
+* *maptiler-hillshade*: used to show terrain
+* *land*: a maptiler set used to draw lines around coastlines
+* *land-gradient*: a maptiler tile set used to create a dark gradient around coastlines, extending out into oceans
+* *osm*: an Open Historical Map tileset used to render historical kingdom names and boundaries (only used by map_openhistorical.html)
 
 ## Sprites
 
-I have a small script that takes all the images in sprites/spriteimages and bundles them into a maplibre-gl format sprite file. It is invoked with `npm run sprites`. The results are hosted on github pages and referenced by the styles.
+I have a small script that takes all the images in sprites/spriteimages and bundles them into a maplibre-gl format sprite file. It is invoked with `npm run sprites`. The results are hosted on github pages and referenced by the styles. At the moment the only image in the sprite is the paper texture, but if more images are added to the directory, the script will add them to the resulting sprite and they can be used in the style file(s).
 
 ## Credits
 
 I can no longer find the source of the paper texture I used, but it was open source via pixabay.
+
+The compass rose is an edited version of one [Designed by Freepik](https://www.freepik.com/free-vector/vintage-compass-collection_1582093.htm#fromView=search&page=1&position=7&uuid=e7d55336-ae8d-4a3b-ad39-4aed575c0433&query=Vintage+compass+rose).

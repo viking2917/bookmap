@@ -255,6 +255,8 @@
     const map = new maplibregl.Map({
       container: 'map',
       style: 'https://viking2917.github.io/bookmap/bookmap.json',
+      // use this style to see historical kingdom names and boundaries.
+      // style: 'https://viking2917.github.io/bookmap/bookmap_openhistoricalmap.json',
       center: [rome[0], rome[1]], // Default center [lng, lat]
       zoom: 4,
       preserveDrawingBuffer: true
@@ -383,8 +385,10 @@
             "interpolate",
             ["linear"],
             ["zoom"],
-            4, 16,
-            10, 20
+            0, 8,
+            3, 12,
+            6, 20,
+            10, 22
           ],
           'text-max-width': 20,
           "text-offset": [0.5, 0],

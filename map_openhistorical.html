@@ -6,15 +6,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom markers with MapTiler & OpenHistoricalMaps</title>
+  <title>Vintage style map with custom markers using MapTiler & OpenHistoricalMaps</title>
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/@openhistoricalmap/maplibre-gl-dates/index.js"></script>
   <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+
+
+  <link href="https://unpkg.com/@watergis/maplibre-gl-export@3.8.0/dist/maplibre-gl-export.css" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: Garamond;
     }
 
     #map {
@@ -25,7 +29,7 @@
     .info-panel {
       position: absolute;
       top: 10px;
-      right: 10px;
+      left: 50px;
       background: white;
       padding: 15px;
       border-radius: 5px;
@@ -46,6 +50,7 @@
 
     .maplibregl-popup-content {
       padding: 10px;
+      font-family: Garamond !important;
     }
 
     .maplibregl-popup-content h4 {
@@ -56,25 +61,17 @@
       z-index: 1000 !important;
     }
 
-    #export-btn {
+    #buttons {
       position: absolute;
       top: 10px;
-      right: 350px;
+      right: 20px;
       z-index: 1000;
-      padding: 10px 20px;
-      background: white;
-      border: 2px solid #333;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: row;
     }
 
+    #export-btn,
     #import-btn {
-      position: absolute;
-      top: 10px;
-      right: 475px;
-      z-index: 1000;
       padding: 10px 20px;
       background: white;
       border: 2px solid #333;
@@ -84,18 +81,20 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    #export-btn:hover, #import-btn:hover {
+    #export-btn:hover,
+    #import-btn:hover {
       background: #f0f0f0;
     }
 
-    #export-btn:active, #import-btn:active {
+    #export-btn:active,
+    #import-btn:active {
       background: #e0e0e0;
     }
 
     #import-container {
       position: absolute;
       top: 10px;
-      right: 500px;
+      right: 150px;
       width: 30rem;
       z-index: 1000;
       background: white;
@@ -137,77 +136,91 @@
 
 <body>
   <div id="map"></div>
-  <div class="info-panel">
-    <h3>Instructions</h3>
-    <p>Edit the <code>pointsOfInterest</code> array in the code to add your locations.</p>
-    <!-- <p><strong>Format:</strong> [latitude, longitude, "Name", "Description"]</p> -->
-    <!-- <p><em>Note: longitude comes first!</em></p> -->
-  </div>
-  <button id="export-btn">Export Map</button>
-  <button id="import-btn">Set POI</button>
-  <div id="import-container" style="display: none;">
-    <textarea id="json-input" placeholder='Paste JSON here, e.g. {"points": [ [latitude, longitude, "Name", "Description"] ...]}'></textarea>
-    <button id="import-btn-go">Set POI JSON</button>
+  <div id="mapui">
+    <div class="info-panel">
+      <h3>Instructions</h3>
+      <p>Set POI to change the locations displayed, or edit the <code>pointsOfInterest</code> array in the code.</p>
+      <p>Export Map will save the map image to a file.</p>
+      <p>The compass rose can be moved by clicking and dragging it</p>
+      <!-- <p><strong>Format:</strong> [latitude, longitude, "Name", "Description"]</p> -->
+      <!-- <p><em>Note: longitude comes first!</em></p> -->
+    </div>
+    <div id="buttons">
+      <button id="import-btn">Set POI</button>
+      <button id="export-btn">Export Map</button>
+    </div>
+
+    <div id="import-container" style="display: none;">
+      <textarea id="json-input"
+        placeholder='Paste JSON here, e.g. {"points": [ [latitude, longitude, "Name", "Description"] ...]}'></textarea>
+      <button id="import-btn-go">Set POI JSON</button>
+    </div>
   </div>
 
   <script>
+    let mapcanvas = null;
+
+
     // ==============================================
     // EDIT YOUR POINTS OF INTEREST HERE
     // ==============================================
     // IMPORTANT: Format is [LONGITUDE, LATITUDE, name, description]
     // Longitude comes FIRST (this is different from Leaflet!)
     let pointsOfInterest = [
-      [51.5074, -0.1278, "London", "London, England"],
-      [48.8566, 2.3522, "Paris", "Paris, France"],
+      [38.1938, 15.5540, "Messina, Sicily", "Messina, Sicily, the location where Richard embarked to sail to the Holy Land."],
+      [34.6731, 33.0449, "Limassol"],
+      [35.3086, 33.2811, "Saint Hilarion Castle, Cyprus"],
       [31.7683, 35.2137, "Jerusalem", "Jerusalem"],
-      [32.9236, 35.0710, "Acre", "Acre, Israel"],
-      [38.1938, 15.5540, "Messina", "Messina, Sicily"],
-      [34.7071, 33.0226, "Limassol", "Limassol, Cyprus"],
-      [33.5147, 36.2777, "Damascus", "Damascus, Syria"]
+      [34.7759, 35.9982, "Margat Castle, Syria"],
+      [32.9236, 35.0710, "Acre"],
+      [32.1066, 34.7781, "Arsuf & Jaffa"],
     ];
-
-    pointsOfInterest = [
-  [34.6731, 33.0449, "Limassol Castle"],
-  [35.3086, 33.2811, "Saint Hilarion Castle"],
-  [31.7683, 35.2137, "Jerusalem", "Jerusalem"],
-  [34.7759, 35.9982, "Margat Castle"],
-  [32.9236, 35.0710, "Acre"],
-  [32.1066, 34.7781, "Arsuf & Jaffa"],
-  //[31.6715, 34.5630, "Ascalon"],
-
-];
-
     const rome = [12.49637, 41.90278];
 
     // Create GeoJSON from points
-    let geojson = loadPOI();
+    let poiGeojson = {
+      type: 'FeatureCollection',
+      features: pointsOfInterest.map(poi => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          // lat/lon reversed in this map library...
+          coordinates: [poi[1], poi[0]]
+        },
+        properties: {
+          name: poi[2],
+          description: poi[3]
+        }
+      }))
+    };
 
-    function loadPOI() {
-      return {
-        type: 'FeatureCollection',
-        features: pointsOfInterest.map(poi => ({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            // lat/lon reversed in this map library...
-            coordinates: [poi[1], poi[0]]
-          },
-          properties: {
-            name: poi[2],
-            description: poi[3]
+    // geojson for compass rose display. default to rome, will be recentered later.
+    const compassGeojson = {
+      'type': 'FeatureCollection',
+      'features': [
+        {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [rome[0], rome[1]]
           }
-        }))
-      };
-    }
+        }
+      ]
+    };
+
+    // ==============================================
+    // EVENT HANDLERS
+    // ==============================================
+
+    // My export 
+    document.getElementById('export-btn').addEventListener('click', () => {
+      exportMapToHighRes(map);
+    });
 
     document.getElementById('import-btn').addEventListener('click', () => {
       const panel = document.getElementById('import-container');
       panel.style.display = 'block';
     });
-
-    function hideJsonPanel() {
-      document.getElementById('import-container').style.display='none';
-    }
 
     // Handle JSON import
     document.getElementById('import-btn-go').addEventListener('click', () => {
@@ -222,7 +235,8 @@
         pointsOfInterest = JSON.parse(jsonText);
         loadPOI();
         display();
-        hideJsonPanel();
+        // hide json panel
+        document.getElementById('import-container').style.display = 'none';
         console.log('Points of Interest loaded:', pointsOfInterest);
         alert('POI JSON loaded successfully!');
       } catch (error) {
@@ -236,58 +250,63 @@
     // ==============================================
 
     // Initialize the map with OpenHistoricalMap style
-    //  style: 'https://unpkg.com/@openhistoricalmap/map-styles@latest/dist/woodblock/woodblock.json',
+    // nope use our own.
+    // style: 'https://unpkg.com/@openhistoricalmap/map-styles@latest/dist/woodblock/woodblock.json',
     const map = new maplibregl.Map({
       container: 'map',
+      // use this style to see historical kingdom names and boundaries.
       style: 'https://viking2917.github.io/bookmap/bookmap_openhistoricalmap.json',
       center: [rome[0], rome[1]], // Default center [lng, lat]
       zoom: 4,
       preserveDrawingBuffer: true
     });
 
-    // Add navigation controls (zoom buttons)
-    map.addControl(new maplibregl.NavigationControl({ showZoom: true }), 'top-left');
+    mapcanvas = map.getCanvasContainer();
 
-    // Add scale control
-    map.addControl(new maplibregl.ScaleControl({
-      maxWidth: 200,
-      unit: 'metric'
-    }), 'bottom-left');
+    map.on('load', function () {
 
+      addCompass();
+      // Add navigation controls (zoom buttons)
+      map.addControl(new maplibregl.NavigationControl({ showZoom: true }), 'top-left');
+      // Add scale control
+      map.addControl(new maplibregl.ScaleControl({
+        maxWidth: 200,
+        unit: 'imperial'
+      }), 'bottom-left');
 
-    // ==============================================
-    // OPTIONAL: DATE FILTERING
-    // ==============================================
-    // Uncomment the code below to filter the map by a specific year
-    // This is useful for viewing historical data from a specific time period
-    map.on('styledata', function () {
-      // Set the year you want to display (example: 1900)
-      const targetYear = 1187;
-      const targetDate = `${targetYear}-01-01`;
+      // ==============================================
+      // OPTIONAL: DATE FILTERING
+      // ==============================================
+      // This is useful for viewing historical data from a specific time period
+      map.on('styledata', function () {
+        // Set the year you want to display (example: 1900)
+        const targetYear = 1187;
+        const targetDate = `${targetYear}-01-01`;
 
-      // Apply date filter if the function exists
-      if (map.filterByDate) {
-        console.log('data filtering map');
-        map.filterByDate(targetDate);
-      }
+        // Apply date filter if the function exists
+        if (map.filterByDate) {
+          console.log('data filtering map');
+          map.filterByDate(targetDate);
+        }
+      });
+
+      display();
+      setupExportPlugin();
     });
 
-    // ==============================================
-    // ADD MARKERS AFTER MAP LOADS
-    // ==============================================
-
-    // ─────────────────────────────────────
-    // 1️⃣ Add point source
-    // ─────────────────────────────────────
-
-    function display() {
+    async function display() {
       // remove if exists
       removeGeoJSONSource(map, 'poi-source');
+
+      // ADD MARKERS AFTER MAP LOADS
+      // ─────────────────────────────────────
+      // 1️⃣ Add point source
+      // ─────────────────────────────────────
 
       // Add source
       map.addSource('poi-source', {
         type: 'geojson',
-        data: geojson
+        data: poiGeojson
       });
 
       // ─────────────────────────────────────
@@ -365,9 +384,12 @@
             "interpolate",
             ["linear"],
             ["zoom"],
-            4, 16,
-            10, 20
+            0, 8,
+            3, 12,
+            6, 20,
+            10, 22
           ],
+          'text-max-width': 20,
           "text-offset": [0.5, 0],
           "text-anchor": "left",
           "text-allow-overlap": true,
@@ -391,7 +413,7 @@
 
 
       // Add click handler for popups
-      map.on('click', 'poi-layer', (e) => {
+      map.on('click', 'marker-labels', (e) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         const { name, description } = e.features[0].properties;
 
@@ -404,13 +426,13 @@
           .addTo(map);
       });
 
-      map.on('mouseenter', 'poi-layer', () => {
-        map.getCanvas().style.cursor = 'pointer';
-      });
+      // map.on('mouseenter', 'poi-layer', () => {
+      //   map.getCanvas().style.cursor = 'pointer';
+      // });
 
-      map.on('mouseleave', 'poi-layer', () => {
-        map.getCanvas().style.cursor = '';
-      });
+      // map.on('mouseleave', 'poi-layer', () => {
+      //   map.getCanvas().style.cursor = '';
+      // });
 
       // Fit bounds
       const bounds = new maplibregl.LngLatBounds();
@@ -418,52 +440,137 @@
       if (pointsOfInterest.length > 0) {
         map.fitBounds(bounds, { padding: 200, maxZoom: 15 });
       }
+
+      // recenter compass rose
+      compassGeojson.features[0].geometry.coordinates = [bounds.getCenter().lng, bounds.getSouth()];
+      map.getSource('compasspoint').setData(compassGeojson);
+
+
     }
 
-    map.on('load', function () {
-      display();
-    });
-
-
-    // Remove a GeoJSON source and its layers
-function removeGeoJSONSource(map, sourceId) {
-  // Get all layers
-  const layers = map.getStyle().layers;
-  
-  // Find and remove all layers that use this source
-  layers.forEach(layer => {
-    if (layer.source === sourceId) {
-      map.removeLayer(layer.id);
-    }
-  });
-  
-  // Remove the source itself
-  if (map.getSource(sourceId)) {
-    map.removeSource(sourceId);
-  }
-}
-
-
-
-    async function exportMapToHighRes(map) {
-      const exportBtn = document.getElementById('export-btn');
-      exportBtn.style.display = 'none';
-
-      // Hide all controls
-      const controls = map.getContainer().querySelectorAll(
-        '.maplibregl-ctrl-top-right, .maplibregl-ctrl-top-left, ' +
-        '.maplibregl-ctrl-bottom-right, .maplibregl-ctrl-bottom-left'
-      );
-      controls.forEach(ctrl => {
-        ctrl.style.display = 'none';
+    // compass display
+    function addCompass() {
+      const existingImages = {};
+      map.on('styleimagemissing', async (e) => {
+        if (existingImages[e.id]) {
+          return;
+        }
+        existingImages[e.id] = true;
+        const response = await fetch(e.id);
+        const svgText = await response.text();
+        const svg = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
+        const image = new Image();
+        const promise = new Promise((resolve) => {
+          image.onload = resolve;
+        });
+        image.src = svg;
+        await promise; // Wait for the image to load
+        map.addImage(e.id, image);
       });
 
-      // Wait for controls to hide
-      await new Promise(resolve => setTimeout(resolve, 100));
+      map.addSource('compasspoint', {
+        'type': 'geojson',
+        'data': compassGeojson
+      });
 
-      // Get the canvas and export
-      const canvas = map.getCanvas();
-      canvas.toBlob((blob) => {
+      map.addLayer({
+        'id': 'compass-rose',
+        'type': 'symbol',
+        'source': 'compasspoint',
+        'layout': {
+          'icon-image': 'https://viking2917.github.io/bookmap/images/compass.svg',
+          'icon-overlap': 'always',
+          'text-overlap': 'always',
+          'icon-size': 0.5,
+          'icon-rotation-alignment': 'map',
+        }
+      });
+
+      // When the cursor enters a feature in the point layer, prepare for dragging.
+      map.on('mouseenter', 'compass-rose', () => {
+        mapcanvas.style.cursor = 'move';
+      });
+
+      map.on('mouseleave', 'compass-rose', () => {
+        mapcanvas.style.cursor = '';
+      });
+
+      map.on('mousedown', 'compass-rose', (e) => {
+        // Prevent the default map drag behavior.
+        e.preventDefault();
+
+        mapcanvas.style.cursor = 'grab';
+
+        map.on('mousemove', onMove);
+        map.once('mouseup', onUp);
+      });
+
+      map.on('touchstart', 'compass-rose', (e) => {
+        if (e.points.length !== 1) return;
+
+        // Prevent the default map drag behavior.
+        e.preventDefault();
+
+        map.on('touchmove', onMove);
+        map.once('touchend', onUp);
+      });
+    }
+
+    function setupExportPlugin() {
+      // Add export control
+      // Use dynamic import to load the export control
+      import('https://esm.sh/@watergis/maplibre-gl-export@3.8.0')
+        .then(module => {
+          const { MaplibreExportControl, Size, PageOrientation, Format, DPI } = module;
+
+          map.addControl(
+            new MaplibreExportControl({
+              PageSize: Size.A4,
+              PageOrientation: PageOrientation.Portrait,
+              Format: Format.PNG,
+              DPI: DPI[96],
+              Crosshair: true,
+              PrintableArea: true
+            }),
+            'bottom-left'
+          );
+        })
+        .catch(err => console.error('Error loading export control:', err));
+    }
+
+    // Remove a GeoJSON source and its layers
+    function removeGeoJSONSource(map, sourceId) {
+      // Get all layers
+      const layers = map.getStyle().layers;
+
+      // Find and remove all layers that use this source
+      layers.forEach(layer => {
+        if (layer.source === sourceId) {
+          map.removeLayer(layer.id);
+        }
+      });
+
+      // Remove the source itself
+      if (map.getSource(sourceId)) {
+        map.removeSource(sourceId);
+      }
+    }
+
+    async function exportMapToHighRes(map) {
+      // Get the map canvas
+      const mapCanvas = map.getCanvas();
+
+      // Create a new canvas for the combined image
+      const exportCanvas = document.createElement('canvas');
+      exportCanvas.width = mapCanvas.width;
+      exportCanvas.height = mapCanvas.height;
+      const ctx = exportCanvas.getContext('2d');
+
+      // Draw the map
+      ctx.drawImage(mapCanvas, 0, 0);
+
+      // Export the combined canvas
+      exportCanvas.toBlob((blob) => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.download = `map-export-${Date.now()}.png`;
@@ -471,18 +578,31 @@ function removeGeoJSONSource(map, sourceId) {
         link.click();
         URL.revokeObjectURL(url);
 
-        // Restore controls and button
-        controls.forEach(ctrl => {
-          ctrl.style.display = '';
-        });
-        exportBtn.style.display = '';
       }, 'image/png');
+
     }
 
-    // Usage
-    document.getElementById('export-btn').addEventListener('click', () => {
-      exportMapToHighRes(map);
-    });
+    // ==============================================
+    // DRAGGABLE COMPASS CODE
+    // ==============================================
+    function onMove(e) {
+      const coords = e.lngLat;
+
+      // Set a UI indicator for dragging.
+      mapcanvas.style.cursor = 'grabbing';
+
+      // Update the Point feature in `geojson` coordinates
+      // and call setData to the source layer `point` on it.
+      compassGeojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
+      map.getSource('compasspoint').setData(compassGeojson);
+    }
+
+    function onUp(e) {
+      mapcanvas.style.cursor = '';
+      // Unbind mouse/touch events
+      map.off('mousemove', onMove);
+      map.off('touchmove', onMove);
+    }
 
   </script>
 </body>
