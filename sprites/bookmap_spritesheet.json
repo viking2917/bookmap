@@ -1,14 +1,7 @@
 {
-  "paper_brown": {
-    "x": 2,
-    "y": 2,
-    "width": 512,
-    "height": 512,
-    "pixelRatio": 2
-  },
   "paper": {
     "x": 2,
-    "y": 516,
+    "y": 2,
     "width": 256,
     "height": 256,
     "pixelRatio": 2
