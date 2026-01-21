@@ -152,7 +152,13 @@
 
     <div id="import-container" style="display: none;">
       <textarea id="json-input"
-        placeholder='Paste JSON here, e.g. {"points": [ [latitude, longitude, "Name", "Description"] ...]}'></textarea>
+        placeholder='Paste list of entries here, e.g.
+      [48.8566,2.3522,"Paris", "The City of Light"],
+      [51.5074,-0.1278,"London", "Old Londinium"]
+      
+      format is 
+      [Latitude, Longitude, Name, Description]
+      '></textarea>
       <button id="import-btn-go">Set POI JSON</button>
     </div>
   </div>
@@ -160,12 +166,13 @@
   <script>
     let mapcanvas = null;
 
-
     // ==============================================
     // EDIT YOUR POINTS OF INTEREST HERE
-    // ==============================================
     // IMPORTANT: Format is [LONGITUDE, LATITUDE, name, description]
     // Longitude comes FIRST (this is different from Leaflet!)
+    // ACTUALLY NO. IT IS LAT/LON, I REVERSED IT BECAUSE TOO MUCH CONFUSION. 
+    // I RE-REVERSE THEM WHEN I CALL MAPLIBRE FUNCTIONS
+    // ==============================================
     let pointsOfInterest = [
       [38.1938, 15.5540, "Messina, Sicily", "Messina, Sicily, the location where Richard embarked to sail to the Holy Land."],
       [34.6731, 33.0449, "Limassol"],
@@ -176,23 +183,6 @@
       [32.1066, 34.7781, "Arsuf & Jaffa"],
     ];
     const rome = [12.49637, 41.90278];
-
-    // Create GeoJSON from points
-    let poiGeojson = {
-      type: 'FeatureCollection',
-      features: pointsOfInterest.map(poi => ({
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          // lat/lon reversed in this map library...
-          coordinates: [poi[1], poi[0]]
-        },
-        properties: {
-          name: poi[2],
-          description: poi[3]
-        }
-      }))
-    };
 
     // geojson for compass rose display. default to rome, will be recentered later.
     const compassGeojson = {
@@ -232,8 +222,9 @@
       }
 
       try {
-        pointsOfInterest = JSON.parse(jsonText);
-        loadPOI();
+        let object = `[ ${jsonText} ]`;
+        pointsOfInterest = JSON.parse(object);
+
         display();
         // hide json panel
         document.getElementById('import-container').style.display = 'none';
@@ -298,6 +289,9 @@
     async function display() {
       // remove if exists
       removeGeoJSONSource(map, 'poi-source');
+
+      // Create GeoJSON from points
+      let poiGeojson = loadPOI();
 
       // ADD MARKERS AFTER MAP LOADS
       // ─────────────────────────────────────
@@ -427,13 +421,13 @@
           .addTo(map);
       });
 
-      // map.on('mouseenter', 'poi-layer', () => {
-      //   map.getCanvas().style.cursor = 'pointer';
-      // });
+      map.on('mouseenter', 'marker-labels', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
 
-      // map.on('mouseleave', 'poi-layer', () => {
-      //   map.getCanvas().style.cursor = '';
-      // });
+      map.on('mouseleave', 'marker-labels', () => {
+        map.getCanvas().style.cursor = '';
+      });
 
       // Fit bounds
       const bounds = new maplibregl.LngLatBounds();
@@ -445,8 +439,24 @@
       // recenter compass rose
       compassGeojson.features[0].geometry.coordinates = [bounds.getCenter().lng, bounds.getSouth()];
       map.getSource('compasspoint').setData(compassGeojson);
+    }
 
-
+    function loadPOI() {
+      return {
+        type: 'FeatureCollection',
+        features: pointsOfInterest.map(poi => ({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            // lat/lon reversed in this map library...
+            coordinates: [poi[1], poi[0]]
+          },
+          properties: {
+            name: poi[2],
+            description: poi[3]
+          }
+        }))
+      };
     }
 
     // compass display
@@ -557,7 +567,7 @@
       }
     }
 
-    async function exportMapToHighRes(map) {
+    function exportMapToHighRes(map) {
       // Get the map canvas
       const mapCanvas = map.getCanvas();
 
