@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom markers with MapTiler & OpenHistoricalMaps</title>
+  <title>Vintage style map with custom markers using MapTiler & OpenHistoricalMaps</title>
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/@openhistoricalmap/maplibre-gl-dates/index.js"></script>
   <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
@@ -64,13 +64,14 @@
     #buttons {
       position: absolute;
       top: 10px;
-      right: 50px;
+      right: 20px;
       z-index: 1000;
       display: flex;
       flex-direction: row;
     }
 
-    #export-btn, #import-btn {
+    #export-btn,
+    #import-btn {
       padding: 10px 20px;
       background: white;
       border: 2px solid #333;
@@ -148,7 +149,7 @@
       <button id="import-btn">Set POI</button>
       <button id="export-btn">Export Map</button>
     </div>
-    
+
     <div id="import-container" style="display: none;">
       <textarea id="json-input"
         placeholder='Paste JSON here, e.g. {"points": [ [latitude, longitude, "Name", "Description"] ...]}'></textarea>
@@ -158,7 +159,7 @@
 
   <script>
     let mapcanvas = null;
-    
+
 
     // ==============================================
     // EDIT YOUR POINTS OF INTEREST HERE
@@ -178,20 +179,20 @@
 
     // Create GeoJSON from points
     let poiGeojson = {
-        type: 'FeatureCollection',
-        features: pointsOfInterest.map(poi => ({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            // lat/lon reversed in this map library...
-            coordinates: [poi[1], poi[0]]
-          },
-          properties: {
-            name: poi[2],
-            description: poi[3]
-          }
-        }))
-      };
+      type: 'FeatureCollection',
+      features: pointsOfInterest.map(poi => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          // lat/lon reversed in this map library...
+          coordinates: [poi[1], poi[0]]
+        },
+        properties: {
+          name: poi[2],
+          description: poi[3]
+        }
+      }))
+    };
 
     // geojson for compass rose display. default to rome, will be recentered later.
     const compassGeojson = {
@@ -201,7 +202,7 @@
           'type': 'Feature',
           'geometry': {
             'type': 'Point',
-            'coordinates': [rome[0],rome[1]]
+            'coordinates': [rome[0], rome[1]]
           }
         }
       ]
@@ -210,6 +211,11 @@
     // ==============================================
     // EVENT HANDLERS
     // ==============================================
+
+    // My export 
+    document.getElementById('export-btn').addEventListener('click', () => {
+      exportMapToHighRes(map);
+    });
 
     document.getElementById('import-btn').addEventListener('click', () => {
       const panel = document.getElementById('import-container');
@@ -256,27 +262,20 @@
 
     mapcanvas = map.getCanvasContainer();
 
-
     map.on('load', function () {
 
       addCompass();
-
-
-
       // Add navigation controls (zoom buttons)
       map.addControl(new maplibregl.NavigationControl({ showZoom: true }), 'top-left');
-
       // Add scale control
       map.addControl(new maplibregl.ScaleControl({
         maxWidth: 200,
         unit: 'imperial'
       }), 'bottom-left');
 
-
       // ==============================================
       // OPTIONAL: DATE FILTERING
       // ==============================================
-      // Uncomment the code below to filter the map by a specific year
       // This is useful for viewing historical data from a specific time period
       map.on('styledata', function () {
         // Set the year you want to display (example: 1900)
@@ -290,162 +289,231 @@
         }
       });
 
+      display();
+      setupExportPlugin();
+    });
 
-      async function display() {
-        // remove if exists
-        removeGeoJSONSource(map, 'poi-source');
+    async function display() {
+      // remove if exists
+      removeGeoJSONSource(map, 'poi-source');
 
-        // ADD MARKERS AFTER MAP LOADS
-        // ─────────────────────────────────────
-        // 1️⃣ Add point source
-        // ─────────────────────────────────────
+      // ADD MARKERS AFTER MAP LOADS
+      // ─────────────────────────────────────
+      // 1️⃣ Add point source
+      // ─────────────────────────────────────
 
-        // Add source
-        map.addSource('poi-source', {
-          type: 'geojson',
-          data: poiGeojson
-        });
+      // Add source
+      map.addSource('poi-source', {
+        type: 'geojson',
+        data: poiGeojson
+      });
 
-        // ─────────────────────────────────────
-        // 2️⃣ Outer engraved ring(s)
-        // ─────────────────────────────────────
-        map.addLayer({
-          id: "marker-ring-2",
-          type: "circle",
-          source: "poi-source",
-          paint: {
-            "circle-radius": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              4, 6,
-              10, 10
-            ],
-            "circle-color": "rgba(0,0,0,0)",
-            "circle-stroke-width": 1,
-            "circle-stroke-color": "rgba(255,255,255,0.5)",
-            "circle-stroke-opacity": 0.9
-          }
-        });
-
-        map.addLayer({
-          id: "marker-ring",
-          type: "circle",
-          source: "poi-source",
-          paint: {
-            "circle-radius": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              4, 4,
-              10, 8
-            ],
-            "circle-color": "rgba(0,0,0,0)",
-            "circle-stroke-width": 2,
-            "circle-stroke-color": "#696969",
-            "circle-stroke-opacity": 0.9
-          }
-        });
-
-        // ─────────────────────────────────────
-        // 3️⃣ Inner ink dot
-        // ─────────────────────────────────────
-        map.addLayer({
-          id: "marker-core",
-          type: "circle",
-          source: "poi-source",
-          paint: {
-            "circle-radius": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              4, 3,
-              10, 6
-            ],
-            "circle-color": "#696969",
-            "circle-opacity": 0.95
-          }
-        });
-
-        // ─────────────────────────────────────
-        // 4️⃣ City labels (engraved atlas style)
-        // ─────────────────────────────────────
-        map.addLayer({
-          id: "marker-labels",
-          type: "symbol",
-          source: "poi-source",
-          layout: {
-            "text-field": ["get", "name"],
-            "text-font": ["Noto Serif Bold"],
-            "text-size": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              4, 16,
-              10, 20
-            ],
-            'text-max-width': 20,
-            "text-offset": [0.5, 0],
-            "text-anchor": "left",
-            "text-allow-overlap": true,
-            "symbol-placement": "point"
-          },
-          paint: {
-            "text-color": "#222",
-
-            "text-halo-width": 1.5,
-
-            // "text-halo-color": "#ff0000",          
-            "text-halo-color": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              0, "rgba(240, 244, 216, 1)",
-              10, "rgba(246,247,227, 1)"
-            ],
-          }
-        });
-
-
-        // Add click handler for popups
-        map.on('click', 'marker-labels', (e) => {
-          const coordinates = e.features[0].geometry.coordinates.slice();
-          const { name, description } = e.features[0].properties;
-
-          let popupHTML = `<h4>${name}</h4>`;
-          if (description) popupHTML += `<p>${description}</p>`;
-
-          new maplibregl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(popupHTML)
-            .addTo(map);
-        });
-
-        // map.on('mouseenter', 'poi-layer', () => {
-        //   map.getCanvas().style.cursor = 'pointer';
-        // });
-
-        // map.on('mouseleave', 'poi-layer', () => {
-        //   map.getCanvas().style.cursor = '';
-        // });
-
-        // Fit bounds
-        const bounds = new maplibregl.LngLatBounds();
-        pointsOfInterest.forEach(poi => bounds.extend([poi[1], poi[0]]));
-        if (pointsOfInterest.length > 0) {
-          map.fitBounds(bounds, { padding: 200, maxZoom: 15 });
+      // ─────────────────────────────────────
+      // 2️⃣ Outer engraved ring(s)
+      // ─────────────────────────────────────
+      map.addLayer({
+        id: "marker-ring-2",
+        type: "circle",
+        source: "poi-source",
+        paint: {
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            4, 6,
+            10, 10
+          ],
+          "circle-color": "rgba(0,0,0,0)",
+          "circle-stroke-width": 1,
+          "circle-stroke-color": "rgba(255,255,255,0.5)",
+          "circle-stroke-opacity": 0.9
         }
+      });
 
-        // recenter compass rose
-        compassGeojson.features[0].geometry.coordinates = [bounds.getCenter().lng, bounds.getSouth()];
-        map.getSource('compasspoint').setData(compassGeojson);
+      map.addLayer({
+        id: "marker-ring",
+        type: "circle",
+        source: "poi-source",
+        paint: {
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            4, 4,
+            10, 8
+          ],
+          "circle-color": "rgba(0,0,0,0)",
+          "circle-stroke-width": 2,
+          "circle-stroke-color": "#696969",
+          "circle-stroke-opacity": 0.9
+        }
+      });
+
+      // ─────────────────────────────────────
+      // 3️⃣ Inner ink dot
+      // ─────────────────────────────────────
+      map.addLayer({
+        id: "marker-core",
+        type: "circle",
+        source: "poi-source",
+        paint: {
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            4, 3,
+            10, 6
+          ],
+          "circle-color": "#696969",
+          "circle-opacity": 0.95
+        }
+      });
+
+      // ─────────────────────────────────────
+      // 4️⃣ City labels (engraved atlas style)
+      // ─────────────────────────────────────
+      map.addLayer({
+        id: "marker-labels",
+        type: "symbol",
+        source: "poi-source",
+        layout: {
+          "text-field": ["get", "name"],
+          "text-font": ["Noto Serif Bold"],
+          "text-size": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            4, 16,
+            10, 20
+          ],
+          'text-max-width': 20,
+          "text-offset": [0.5, 0],
+          "text-anchor": "left",
+          "text-allow-overlap": true,
+          "symbol-placement": "point"
+        },
+        paint: {
+          "text-color": "#222",
+
+          "text-halo-width": 1.5,
+
+          // "text-halo-color": "#ff0000",          
+          "text-halo-color": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            0, "rgba(240, 244, 216, 1)",
+            10, "rgba(246,247,227, 1)"
+          ],
+        }
+      });
 
 
+      // Add click handler for popups
+      map.on('click', 'marker-labels', (e) => {
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const { name, description } = e.features[0].properties;
+
+        let popupHTML = `<h4>${name}</h4>`;
+        if (description) popupHTML += `<p>${description}</p>`;
+
+        new maplibregl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(popupHTML)
+          .addTo(map);
+      });
+
+      // map.on('mouseenter', 'poi-layer', () => {
+      //   map.getCanvas().style.cursor = 'pointer';
+      // });
+
+      // map.on('mouseleave', 'poi-layer', () => {
+      //   map.getCanvas().style.cursor = '';
+      // });
+
+      // Fit bounds
+      const bounds = new maplibregl.LngLatBounds();
+      pointsOfInterest.forEach(poi => bounds.extend([poi[1], poi[0]]));
+      if (pointsOfInterest.length > 0) {
+        map.fitBounds(bounds, { padding: 200, maxZoom: 15 });
       }
 
-      display();
+      // recenter compass rose
+      compassGeojson.features[0].geometry.coordinates = [bounds.getCenter().lng, bounds.getSouth()];
+      map.getSource('compasspoint').setData(compassGeojson);
 
 
+    }
+
+    // compass display
+    function addCompass() {
+      const existingImages = {};
+      map.on('styleimagemissing', async (e) => {
+        if (existingImages[e.id]) {
+          return;
+        }
+        existingImages[e.id] = true;
+        const response = await fetch(e.id);
+        const svgText = await response.text();
+        const svg = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
+        const image = new Image();
+        const promise = new Promise((resolve) => {
+          image.onload = resolve;
+        });
+        image.src = svg;
+        await promise; // Wait for the image to load
+        map.addImage(e.id, image);
+      });
+
+      map.addSource('compasspoint', {
+        'type': 'geojson',
+        'data': compassGeojson
+      });
+
+      map.addLayer({
+        'id': 'compass-rose',
+        'type': 'symbol',
+        'source': 'compasspoint',
+        'layout': {
+          'icon-image': 'https://viking2917.github.io/bookmap/images/compass.svg',
+          'icon-overlap': 'always',
+          'text-overlap': 'always',
+          'icon-size': 0.5,
+          'icon-rotation-alignment': 'map',
+        }
+      });
+
+      // When the cursor enters a feature in the point layer, prepare for dragging.
+      map.on('mouseenter', 'compass-rose', () => {
+        mapcanvas.style.cursor = 'move';
+      });
+
+      map.on('mouseleave', 'compass-rose', () => {
+        mapcanvas.style.cursor = '';
+      });
+
+      map.on('mousedown', 'compass-rose', (e) => {
+        // Prevent the default map drag behavior.
+        e.preventDefault();
+
+        mapcanvas.style.cursor = 'grab';
+
+        map.on('mousemove', onMove);
+        map.once('mouseup', onUp);
+      });
+
+      map.on('touchstart', 'compass-rose', (e) => {
+        if (e.points.length !== 1) return;
+
+        // Prevent the default map drag behavior.
+        e.preventDefault();
+
+        map.on('touchmove', onMove);
+        map.once('touchend', onUp);
+      });
+    }
+
+    function setupExportPlugin() {
       // Add export control
       // Use dynamic import to load the export control
       import('https://esm.sh/@watergis/maplibre-gl-export@3.8.0')
@@ -461,85 +529,11 @@
               Crosshair: true,
               PrintableArea: true
             }),
-            'top-right'
+            'bottom-left'
           );
         })
         .catch(err => console.error('Error loading export control:', err));
-    });
-
-
-
-  // compass display
-  function addCompass() {
-    const existingImages = {};
-    map.on('styleimagemissing', async (e) => {
-      if (existingImages[e.id]) {
-        return;
-      }
-      existingImages[e.id] = true;
-      const response = await fetch(e.id);
-      const svgText = await response.text();
-      const svg = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
-      const image = new Image();
-      const promise = new Promise((resolve) => {
-        image.onload = resolve;
-      });
-      image.src = svg;
-      await promise; // Wait for the image to load
-      map.addImage(e.id, image);
-    });
-
-    map.addSource('compasspoint', {
-      'type': 'geojson',
-      'data': compassGeojson
-    });
-
-    map.addLayer({
-      'id': 'compass-rose',
-      'type': 'symbol',
-      'source': 'compasspoint',
-      'layout': {
-        'icon-image': 'https://viking2917.github.io/bookmap/images/compass.svg',
-        'icon-overlap': 'always',
-        'text-overlap': 'always',
-        'icon-size': 0.5,
-        'icon-rotation-alignment': 'map',
-      }
-    });
-
-    // When the cursor enters a feature in the point layer, prepare for dragging.
-    map.on('mouseenter', 'compass-rose', () => {
-      // map.setPaintProperty('compass-rose', 'circle-color', '#3bb2d0');
-      mapcanvas.style.cursor = 'move';
-    });
-
-    map.on('mouseleave', 'compass-rose', () => {
-      // map.setPaintProperty('compass-rose', 'circle-color', '#3887be');
-      mapcanvas.style.cursor = '';
-    });
-
-    map.on('mousedown', 'compass-rose', (e) => {
-      // Prevent the default map drag behavior.
-      e.preventDefault();
-
-      mapcanvas.style.cursor = 'grab';
-
-      map.on('mousemove', onMove);
-      map.once('mouseup', onUp);
-    });
-
-    map.on('touchstart', 'compass-rose', (e) => {
-      if (e.points.length !== 1) return;
-
-      // Prevent the default map drag behavior.
-      e.preventDefault();
-
-      map.on('touchmove', onMove);
-      map.once('touchend', onUp);
-    });
-  }
-
-
+    }
 
     // Remove a GeoJSON source and its layers
     function removeGeoJSONSource(map, sourceId) {
@@ -558,7 +552,6 @@
         map.removeSource(sourceId);
       }
     }
-
 
     async function exportMapToHighRes(map) {
       // Get the map canvas
@@ -586,33 +579,27 @@
 
     }
 
-    // Usage
-    document.getElementById('export-btn').addEventListener('click', () => {
-      exportMapToHighRes(map);
-    });
-
     // ==============================================
     // DRAGGABLE COMPASS CODE
     // ==============================================
-      function onMove(e) {
-        const coords = e.lngLat;
+    function onMove(e) {
+      const coords = e.lngLat;
 
-        // Set a UI indicator for dragging.
-        mapcanvas.style.cursor = 'grabbing';
+      // Set a UI indicator for dragging.
+      mapcanvas.style.cursor = 'grabbing';
 
-        // Update the Point feature in `geojson` coordinates
-        // and call setData to the source layer `point` on it.
-        compassGeojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
-        map.getSource('compasspoint').setData(compassGeojson);
-      }
+      // Update the Point feature in `geojson` coordinates
+      // and call setData to the source layer `point` on it.
+      compassGeojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
+      map.getSource('compasspoint').setData(compassGeojson);
+    }
 
-      function onUp(e) {
-        mapcanvas.style.cursor = '';
-        // Unbind mouse/touch events
-        map.off('mousemove', onMove);
-        map.off('touchmove', onMove);
-      }
-
+    function onUp(e) {
+      mapcanvas.style.cursor = '';
+      // Unbind mouse/touch events
+      map.off('mousemove', onMove);
+      map.off('touchmove', onMove);
+    }
 
   </script>
 </body>
