@@ -5,5 +5,12 @@
     "width": 256,
     "height": 256,
     "pixelRatio": 2
+  },
+  "paperwhite": {
+    "x": 2,
+    "y": 260,
+    "width": 256,
+    "height": 256,
+    "pixelRatio": 2
   }
 }
