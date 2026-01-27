@@ -47,10 +47,8 @@
         "visibility": "visible"
       },
       "paint": {
-        "raster-hue-rotate": 240,
-        "raster-brightness-min": 0.3,
-        "raster-opacity": 0.5,
-        "raster-contrast": 0.4
+        "raster-opacity": 0.4,
+        "raster-hue-rotate": 30
       }
     },
     {
@@ -126,7 +124,7 @@
       "paint": {
         "fill-color": "rgba(255, 251, 235, 0.67)",
         "fill-opacity": 1,
-        "fill-pattern": "paper"
+        "fill-pattern": "paperwhite"
       },
       "filter": [
         "==",
