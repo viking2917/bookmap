@@ -40,6 +40,13 @@
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=iMg3lueCZxkUUN5R9hPR",
   "layers": [
     {
+      "id": "background paint",
+      "type": "background",
+      "paint": {
+        "background-color": "rgba(206, 206, 206, 1)"
+      }
+    },
+    {
       "id": "Land Gradient Dark",
       "type": "raster",
       "source": "land-gradient",
