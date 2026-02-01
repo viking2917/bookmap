@@ -43,7 +43,7 @@
       "id": "background paint",
       "type": "background",
       "paint": {
-        "background-color": "rgba(206, 206, 206, 1)"
+        "background-color": "rgba(255, 255, 255, 1)"
       }
     },
     {
